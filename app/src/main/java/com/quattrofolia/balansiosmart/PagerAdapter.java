@@ -10,13 +10,16 @@ import android.support.v4.app.FragmentPagerAdapter;
 
 public class PagerAdapter extends FragmentPagerAdapter {
 
+    //define the number of fragments
     final int PAGE_COUNT = 4;
+
     public PagerAdapter(FragmentManager fm) { super(fm); }
 
     public int getCount() {
         return PAGE_COUNT;
     }
 
+    //Handle the selection of the fragments
     public Fragment getItem(int position) {
         switch (position) {
             case 0:
