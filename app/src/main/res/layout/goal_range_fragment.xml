@@ -9,4 +9,16 @@
         android:hint="textView2"
         android:id="@+id/textViewGoalRange"/>
 
+    <NumberPicker
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/numberPicker_min"
+        />
+
+    <NumberPicker
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/numberPicker_max"
+        />
+
 </LinearLayout>
