@@ -4,10 +4,27 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <Button
+        android:text="Blood Glucose"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="textView1"
-        android:id="@+id/textViewGoalType"/>
+        android:id="@+id/bloodGlucose" />
 
+    <Button
+        android:text="Activity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/activity" />
+
+    <Button
+        android:text="Sleep"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/sleep" />
+
+    <Button
+        android:text="Weight"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/weight" />
 </LinearLayout>
