@@ -36,4 +36,11 @@
         android:layout_below="@id/textViewGoalIntensityDesc"
         />
 
+    <Button
+        android:id="@+id/btnIntensityNext"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text=">"
+        android:layout_below="@id/npGoalIntensityTime"/>
+
 </RelativeLayout>

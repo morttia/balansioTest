@@ -14,4 +14,8 @@ public class MainActivity extends AppCompatActivity {
         viewPager = (ViewPager) findViewById(R.id.viewpager);
         viewPager.setAdapter(new PagerAdapter(getSupportFragmentManager()));
     }
+
+    public ViewPager getViewPager(){
+        return viewPager;
+    }
 }

@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.NumberPicker;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -22,6 +23,7 @@ public class GoalIntensityFragment extends Fragment {
     private int amountDefault;
     private int timeDefault;
     private TextView tv;
+    private Button btn;
     private int selectedAmount;
     private String selectedTime;
     private String TAG = "debug";
@@ -47,6 +49,7 @@ public class GoalIntensityFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         RelativeLayout myView =(RelativeLayout) inflater.inflate(R.layout.goal_intensity_fragment, container, false);
         tv = (TextView) myView.findViewById(R.id.textViewGoalIntensity);
+        btn = (Button) myView.findViewById(R.id.btnIntensityNext);
         npAmount = (NumberPicker) myView.findViewById(R.id.npGoalIntensityAmount);
         npTime = (NumberPicker) myView.findViewById(R.id.npGoalIntensityTime);
         tv.setText("Number of measurements");
@@ -54,6 +57,12 @@ public class GoalIntensityFragment extends Fragment {
         npAmount.setMaxValue(amountMax);
         npAmount.setValue(amountDefault);
         npAmount.setWrapSelectorWheel(false);
+
+        btn.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                ((MainActivity) getActivity()).getViewPager().setCurrentItem(2);
+            }
+        });
 
         //Set a value change listener for amount NumberPicker
         npAmount.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
@@ -63,7 +72,6 @@ public class GoalIntensityFragment extends Fragment {
                 //tv.setText("Selected amount: " + newVal);
                 selectedAmount = newVal;
                 Log.d(TAG, "onValueChange: selectedAmount: "+selectedAmount);
-                weightMode();
             }
         });
 
@@ -95,6 +103,5 @@ public class GoalIntensityFragment extends Fragment {
         timeDefault = 6;
         Log.d(TAG, "weightMode: called");
     }
-
 
 }
