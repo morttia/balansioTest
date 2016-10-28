@@ -4,15 +4,18 @@
     android:layout_height="match_parent">
 
     <TextView
+        android:id="@+id/textViewGoalIntensity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:hint="textView2"
-        android:id="@+id/textViewGoalIntensity"/>
+        android:layout_centerHorizontal="true"
+        android:paddingTop="30dp"/>
 
     <NumberPicker
         android:id="@+id/npGoalIntensityAmount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
         android:layout_below="@id/textViewGoalIntensity"
         />
 
@@ -20,7 +23,8 @@
         android:id="@+id/textViewGoalIntensityDesc"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="times in"
+        android:text="times a"
+        android:layout_centerHorizontal="true"
         android:layout_below="@id/npGoalIntensityAmount"
         />
 
@@ -28,6 +32,7 @@
         android:id="@+id/npGoalIntensityTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
         android:layout_below="@id/textViewGoalIntensityDesc"
         />
 

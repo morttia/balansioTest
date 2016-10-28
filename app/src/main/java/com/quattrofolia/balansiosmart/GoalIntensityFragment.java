@@ -23,8 +23,11 @@ public class GoalIntensityFragment extends Fragment {
     private int timeDefault;
     private TextView tv;
     private int selectedAmount;
-    private int selectedTime;
+    private String selectedTime;
     private String TAG = "debug";
+    private NumberPicker npTime;
+    private NumberPicker npAmount;
+    private final String[] values = {"day","week", "month"};;
 
     public static GoalIntensityFragment newInstance() {
         GoalIntensityFragment fragment = new GoalIntensityFragment();
@@ -36,17 +39,17 @@ public class GoalIntensityFragment extends Fragment {
         amountMin = 1;
         amountMax = 10;
         amountDefault = 5;
-        timeMin = 1;
-        timeMax = 24;
+        timeMin = 0;
+        timeMax = values.length-1;
         timeDefault = 8;
     }
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         RelativeLayout myView =(RelativeLayout) inflater.inflate(R.layout.goal_intensity_fragment, container, false);
         tv = (TextView) myView.findViewById(R.id.textViewGoalIntensity);
-        NumberPicker npAmount = (NumberPicker) myView.findViewById(R.id.npGoalIntensityAmount);
-        NumberPicker npTime = (NumberPicker) myView.findViewById(R.id.npGoalIntensityTime);
-        tv.setText("this is the goal input intensity fragment");
+        npAmount = (NumberPicker) myView.findViewById(R.id.npGoalIntensityAmount);
+        npTime = (NumberPicker) myView.findViewById(R.id.npGoalIntensityTime);
+        tv.setText("Number of measurements");
         npAmount.setMinValue(amountMin);
         npAmount.setMaxValue(amountMax);
         npAmount.setValue(amountDefault);
@@ -57,12 +60,14 @@ public class GoalIntensityFragment extends Fragment {
             @Override
             public void onValueChange(NumberPicker picker, int oldVal, int newVal){
                 //Display the newly selected number from picker
-                tv.setText("Selected Number : " + newVal);
+                //tv.setText("Selected amount: " + newVal);
                 selectedAmount = newVal;
                 Log.d(TAG, "onValueChange: selectedAmount: "+selectedAmount);
+                weightMode();
             }
         });
 
+        npTime.setDisplayedValues(values);
         npTime.setMinValue(timeMin);
         npTime.setMaxValue(timeMax);
         npTime.setValue(timeDefault);
@@ -72,13 +77,23 @@ public class GoalIntensityFragment extends Fragment {
             @Override
             public void onValueChange(NumberPicker picker, int oldVal, int newVal){
                 //Display the newly selected number from picker
-                tv.setText("Selected Number : " + newVal);
-                selectedTime = newVal;
+                //tv.setText("Selected time: " + newVal);
+                selectedTime = values[newVal];
                 Log.d(TAG, "onValueChange: selectedTime: "+selectedTime);
             }
         });
 
         return myView;
+    }
+
+    public void weightMode(){
+        amountMin = 2;
+        amountMax = 4;
+        amountDefault = 3;
+        timeMin = 4;
+        timeMax = 8;
+        timeDefault = 6;
+        Log.d(TAG, "weightMode: called");
     }
 
 
