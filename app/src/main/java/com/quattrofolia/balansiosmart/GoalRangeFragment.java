@@ -1,5 +1,6 @@
 package com.quattrofolia.balansiosmart;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -26,6 +27,8 @@ public class GoalRangeFragment extends Fragment {
     private int minSelectedValue;
     private int maxSelectedValue;
 
+    private String type;
+
     public static GoalRangeFragment newInstance() {
         GoalRangeFragment fragment = new GoalRangeFragment();
         return fragment;
@@ -33,6 +36,10 @@ public class GoalRangeFragment extends Fragment {
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //type is received from main activity
+        type = ((MainActivity) getActivity()).getSelectedDataType();
+
         minRangeMin = 50;
         minRangeMax = 150;
         minRangeDefault = 80;
@@ -43,12 +50,27 @@ public class GoalRangeFragment extends Fragment {
         maxSelectedValue = maxRangeDefault;
     }
 
+
+
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         LinearLayout myView =(LinearLayout) inflater.inflate(R.layout.goal_range_fragment, container, false);
         TextView tv = (TextView) myView.findViewById(R.id.textViewGoalRange);
         NumberPicker npMin = (NumberPicker) myView.findViewById(R.id.numberPicker_min);
         NumberPicker npMax = (NumberPicker) myView.findViewById(R.id.numberPicker_max);
         tv.setText("This is the goal ideal input range fragment");
+
+        // picker values are set according to the type
+        if(type.equals("weight")){
+            minRangeMin=50;
+            minRangeMax=120;
+            minRangeDefault = 75;
+        }
+        else if(type.equals("kcal")){
+            minRangeMin = 2000;
+            minRangeMax = 3000;
+            minRangeDefault = 2500;
+
+        }
         npMin.setMaxValue(minRangeMax);
         npMin.setMinValue(minRangeMin);
         npMin.setValue(minRangeDefault);

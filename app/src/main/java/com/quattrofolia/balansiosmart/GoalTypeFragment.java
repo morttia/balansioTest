@@ -1,5 +1,7 @@
 package com.quattrofolia.balansiosmart;
 
+import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -13,6 +15,8 @@ import android.widget.TextView;
  */
 
 public class GoalTypeFragment extends Fragment {
+    OnTypeDataPass dataPasser;
+    Activity activity;
 
     public static GoalTypeFragment newInstance() {
         GoalTypeFragment fragment = new GoalTypeFragment();
@@ -27,6 +31,28 @@ public class GoalTypeFragment extends Fragment {
         LinearLayout myView =(LinearLayout) inflater.inflate(R.layout.goal_type_fragment, container, false);
         TextView tv = (TextView) myView.findViewById(R.id.textViewGoalType);
         tv.setText("This is the goal type selection fragment");
+
+        //calling pass data with the type
+        passData("kcal");
+
         return myView;
     }
+
+    ////// selected type is sent to main activity (where from the other fragments can get it)////////
+    public interface OnTypeDataPass {
+        public void onTypeDataPass(String data);
+    }
+
+
+    @Override
+    public void onAttach(Context c) {
+        super.onAttach(c);
+        activity = getActivity();
+        dataPasser = (OnTypeDataPass) activity;
+    }
+
+    public void passData(String data) {
+        dataPasser.onTypeDataPass(data);
+    }
+    /////////////////////
 }
