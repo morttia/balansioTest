@@ -22,12 +22,13 @@ public class GoalIntensityFragment extends Fragment {
     private int timeMax;
     private int amountDefault;
     private int timeDefault;
-    private TextView tv;
+    private TextView tvMeasurementNumber;
+    private TextView tvTimeframe;
     private Button btn;
     private int selectedAmount;
     private String selectedTime;
-    private String TAG = "debug";
-    private NumberPicker npTime;
+    private String TAG = "debyg";
+    private NumberPicker npTimeframe;
     private NumberPicker npAmount;
     private final String[] values = {"day","week", "month"};;
 
@@ -48,16 +49,21 @@ public class GoalIntensityFragment extends Fragment {
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         RelativeLayout myView =(RelativeLayout) inflater.inflate(R.layout.goal_intensity_fragment, container, false);
-        tv = (TextView) myView.findViewById(R.id.textViewGoalIntensity);
+        tvMeasurementNumber = (TextView) myView.findViewById(R.id.textViewGoalIntensity);
+        tvTimeframe = (TextView) myView.findViewById(R.id.textViewGoalIntensityDesc);
         btn = (Button) myView.findViewById(R.id.btnIntensityNext);
         npAmount = (NumberPicker) myView.findViewById(R.id.npGoalIntensityAmount);
-        npTime = (NumberPicker) myView.findViewById(R.id.npGoalIntensityTime);
-        tv.setText("Number of measurements");
+        npTimeframe = (NumberPicker) myView.findViewById(R.id.npGoalIntensityTime);
+        tvMeasurementNumber.setText("Number of measurements");
+        
+        //Initialize the first NumberPicker
         npAmount.setMinValue(amountMin);
         npAmount.setMaxValue(amountMax);
         npAmount.setValue(amountDefault);
         npAmount.setWrapSelectorWheel(false);
 
+
+        //handle the swiping to the next fragment by clicking on the button
         btn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 ((MainActivity) getActivity()).getViewPager().setCurrentItem(2);
@@ -68,24 +74,23 @@ public class GoalIntensityFragment extends Fragment {
         npAmount.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
             @Override
             public void onValueChange(NumberPicker picker, int oldVal, int newVal){
-                //Display the newly selected number from picker
-                //tv.setText("Selected amount: " + newVal);
+                //Set the selected value to a variable
                 selectedAmount = newVal;
                 Log.d(TAG, "onValueChange: selectedAmount: "+selectedAmount);
             }
         });
 
-        npTime.setDisplayedValues(values);
-        npTime.setMinValue(timeMin);
-        npTime.setMaxValue(timeMax);
-        npTime.setValue(timeDefault);
+        //Initialize the second NumberPicker
+        npTimeframe.setDisplayedValues(values);
+        npTimeframe.setMinValue(timeMin);
+        npTimeframe.setMaxValue(timeMax);
+        npTimeframe.setValue(timeDefault);
 
         //Set a value change listener for time NumberPicker
-        npTime.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+        npTimeframe.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
             @Override
             public void onValueChange(NumberPicker picker, int oldVal, int newVal){
-                //Display the newly selected number from picker
-                //tv.setText("Selected time: " + newVal);
+                //Set the selected value to a variable
                 selectedTime = values[newVal];
                 Log.d(TAG, "onValueChange: selectedTime: "+selectedTime);
             }
@@ -95,13 +100,25 @@ public class GoalIntensityFragment extends Fragment {
     }
 
     public void weightMode(){
-        amountMin = 2;
-        amountMax = 4;
+        amountMin = 1;
+        amountMax = 10;
         amountDefault = 3;
-        timeMin = 4;
-        timeMax = 8;
-        timeDefault = 6;
         Log.d(TAG, "weightMode: called");
     }
 
+    public void bgMode(){
+        npTimeframe.setVisibility(View.GONE);
+        tvTimeframe.setVisibility(View.GONE);
+        tvMeasurementNumber.setText("Number of measurements a day");
+        tvMeasurementNumber.setPaddingRelative(0,300,0,0);
+        Log.d(TAG, "bgMode: ");
+    }
+
+    public String getSelectedTime() {
+        return selectedTime;
+    }
+
+    public int getSelectedAmount() {
+        return selectedAmount;
+    }
 }
