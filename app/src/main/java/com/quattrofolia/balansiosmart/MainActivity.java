@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 
 public class MainActivity extends AppCompatActivity implements GoalTypeFragment.OnTypeDataPass{
-    String LOG = "loki";
+    String LOG = "debyg";
     private String selectedDataType;
     private ViewPager viewPager;
 
@@ -20,7 +20,7 @@ public class MainActivity extends AppCompatActivity implements GoalTypeFragment.
 
     @Override
     public void onTypeDataPass(String data) {
-        Log.d(LOG+"valittu datatyyppi",data);
+        Log.d(LOG+"selected dataype",data);
         selectedDataType = data;
     }
 
