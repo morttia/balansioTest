@@ -1,5 +1,6 @@
 package com.quattrofolia.balansiosmart;
 
+import android.app.Activity;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -13,7 +14,10 @@ public class PagerAdapter extends FragmentPagerAdapter {
     //define the number of fragments
     final int PAGE_COUNT = 4;
 
-    public PagerAdapter(FragmentManager fm) { super(fm); }
+
+    public PagerAdapter(FragmentManager fm) {
+        super(fm);
+    }
 
     public int getCount() {
         return PAGE_COUNT;
