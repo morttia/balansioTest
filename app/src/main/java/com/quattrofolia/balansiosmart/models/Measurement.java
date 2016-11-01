@@ -1,20 +1,22 @@
 package com.quattrofolia.balansiosmart.models;
 
+import org.joda.time.Instant;
+
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.Date;
 
-public class Measurement extends Accomplishment implements Serializable {
+public class Measurement implements Serializable {
     private final Unit unit;
     private final BigDecimal value;
+    private final Instant instant;
+
     public Measurement(Unit unit, BigDecimal value) {
-        super(new Date());
-        this.unit = unit;
-        this.value = value;
+        this(unit, value, new Instant());
     }
-    public Measurement(Unit unit, BigDecimal value, Date date) {
-        super(date);
+
+    public Measurement(Unit unit, BigDecimal value, Instant instant) {
         this.unit = unit;
         this.value = value;
+        this.instant = instant;
     }
 }
