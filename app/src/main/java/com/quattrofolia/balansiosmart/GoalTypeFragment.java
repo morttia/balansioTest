@@ -38,8 +38,6 @@ public class GoalTypeFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         goalTypeAdapter = new GoalTypeAdapter(GoalTypeListData.getListData(), getActivity());
         recyclerView.setAdapter(goalTypeAdapter);
-        TextView tv = (TextView) myView.findViewById(R.id.textViewGoalType);
-        tv.setText("This is the goal type selection fragment");
 
         //calling pass data with the type
         passData("kcal");
