@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +20,9 @@ public class GoalTypeFragment extends Fragment {
     OnTypeDataPass dataPasser;
     Activity activity;
 
+    private RecyclerView recyclerView;
+    private GoalTypeAdapter goalTypeAdapter;
+
     public static GoalTypeFragment newInstance() {
         GoalTypeFragment fragment = new GoalTypeFragment();
         return fragment;
@@ -29,12 +34,15 @@ public class GoalTypeFragment extends Fragment {
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         LinearLayout myView =(LinearLayout) inflater.inflate(R.layout.goal_type_fragment, container, false);
+        recyclerView = (RecyclerView) myView.findViewById(R.id.recycler_list);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        goalTypeAdapter = new GoalTypeAdapter(GoalTypeListData.getListData(), getActivity());
+        recyclerView.setAdapter(goalTypeAdapter);
         TextView tv = (TextView) myView.findViewById(R.id.textViewGoalType);
         tv.setText("This is the goal type selection fragment");
 
         //calling pass data with the type
         passData("kcal");
-
         return myView;
     }
 
