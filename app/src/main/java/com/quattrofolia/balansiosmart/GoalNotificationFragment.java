@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
 import android.widget.TextView;
 
 /**
@@ -13,6 +14,10 @@ import android.widget.TextView;
  */
 
 public class GoalNotificationFragment extends Fragment {
+
+    private RadioButton beforehand;
+    private RadioButton ontime;
+    private RadioButton late;
 
     public static GoalNotificationFragment newInstance() {
         GoalNotificationFragment fragment = new GoalNotificationFragment();

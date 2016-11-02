@@ -1,12 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:weightSum="1">
 
     <TextView
-        android:layout_width="wrap_content"
+        android:text="Great! I can help you to achieve your goal by reminding you."
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView"
+        android:textSize="20sp" />
+
+    <TextView
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="textView2"
-        android:id="@+id/textViewGoalNotification"/>
+        android:id="@+id/textViewGoalNotification"
+        android:text="Remind me to measure blood glucose."
+        android:textSize="20sp" />
+
+    <RadioButton
+        android:text="Beforehand "
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/radioButton" />
+
+    <RadioButton
+        android:text="On time"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/radioButton2" />
+
+    <RadioButton
+        android:text="I forgot"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/radioButton3" />
+
+    <Button
+        android:text="Create Custom Rule"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/button2" />
 
 </LinearLayout>
