@@ -17,7 +17,7 @@ import android.widget.TextView;
  */
 
 public class GoalTypeFragment extends Fragment {
-    OnTypeDataPass dataPasser;
+    DataTypePasser dataPasser;
     Activity activity;
 
     private RecyclerView recyclerView;
@@ -44,21 +44,15 @@ public class GoalTypeFragment extends Fragment {
         return myView;
     }
 
-    ////// selected type is sent to main activity (where from the other fragments can get it)////////
-    public interface OnTypeDataPass {
-        public void onTypeDataPass(String data);
-    }
-
-
     @Override
     public void onAttach(Context c) {
         super.onAttach(c);
         activity = getActivity();
-        dataPasser = (OnTypeDataPass) activity;
+        dataPasser = (DataTypePasser) activity;
     }
 
     public void passData(String data) {
-        dataPasser.onTypeDataPass(data);
+        dataPasser.setSelectedDataType(data);
     }
-    /////////////////////
+
 }

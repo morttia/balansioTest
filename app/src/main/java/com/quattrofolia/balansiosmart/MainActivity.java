@@ -5,7 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 
-public class MainActivity extends AppCompatActivity implements GoalTypeFragment.OnTypeDataPass{
+public class MainActivity extends AppCompatActivity implements DataTypePasser {
     String LOG = "debyg";
     private String selectedDataType;
     private ViewPager viewPager;
@@ -19,12 +19,12 @@ public class MainActivity extends AppCompatActivity implements GoalTypeFragment.
     }
 
     @Override
-    public void onTypeDataPass(String data) {
+    public void setSelectedDataType(String data) {
         Log.d(LOG+"selected dataype",data);
         selectedDataType = data;
     }
 
-
+    @Override
     public String getSelectedDataType(){
         return selectedDataType;
     }
