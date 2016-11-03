@@ -11,7 +11,7 @@ public enum HealthDataType {
 
     private final Unit unit;
 
-    private HealthDataType(final Unit unit) {
+    HealthDataType(final Unit unit) {
         this.unit = unit;
     }
 
