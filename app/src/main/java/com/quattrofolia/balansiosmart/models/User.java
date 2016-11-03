@@ -5,4 +5,7 @@ import java.util.ArrayList;
 
 public class User implements Serializable {
     public ArrayList<Goal> goals;
+    public User() {
+        this.goals = new ArrayList<Goal>();
+    }
 }
