@@ -5,7 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 
-public class MainActivity extends AppCompatActivity implements DataTypePasser {
+public class MainActivity extends AppCompatActivity implements ComposerDataObserver {
     String LOG = "debyg";
     private String selectedDataType;
     private ViewPager viewPager;

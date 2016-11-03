@@ -10,14 +10,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 /**
  * Created by eemeliheinonen on 27/10/2016.
  */
 
 public class GoalTypeFragment extends Fragment {
-    DataTypePasser dataPasser;
+    ComposerDataObserver dataPasser;
     Activity activity;
 
     private RecyclerView recyclerView;
@@ -48,7 +47,7 @@ public class GoalTypeFragment extends Fragment {
     public void onAttach(Context c) {
         super.onAttach(c);
         activity = getActivity();
-        dataPasser = (DataTypePasser) activity;
+        dataPasser = (ComposerDataObserver) activity;
     }
 
     public void passData(String data) {
