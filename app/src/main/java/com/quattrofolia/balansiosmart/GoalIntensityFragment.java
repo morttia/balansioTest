@@ -2,6 +2,7 @@ package com.quattrofolia.balansiosmart;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,24 +28,37 @@ public class GoalIntensityFragment extends Fragment {
     private Button btn;
     private int selectedAmount;
     private String selectedTime;
-    private String TAG = "debyg";
+    private String TAG = "IntensityFragment";
     private NumberPicker npTimeframe;
     private NumberPicker npAmount;
-    private final String[] values = {"day","week", "month"};;
+    private final String[] values = {"day","week", "month"};
+    private static final String ARG_PARAM1 = "txt";
+    private String itemType;
 
-    public static GoalIntensityFragment newInstance() {
+    public static GoalIntensityFragment newInstance(String itemName) {
         GoalIntensityFragment fragment = new GoalIntensityFragment();
+        Bundle args = new Bundle();
+        args.putString(ARG_PARAM1, itemName);
+        fragment.setArguments(args);
         return fragment;
     }
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        if (getArguments() != null) {
+            itemType = getArguments().getString(ARG_PARAM1);
+        } else {
+            Log.d(TAG, "onCreate: arguments null");
+        }
+        Log.d(TAG, "onCreate: selected type: "+itemType);
+
         amountMin = 1;
         amountMax = 10;
         amountDefault = 5;
         timeMin = 0;
         timeMax = values.length-1;
-        timeDefault = 8;
+        timeDefault = 0;
     }
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -55,18 +69,37 @@ public class GoalIntensityFragment extends Fragment {
         npAmount = (NumberPicker) myView.findViewById(R.id.npGoalIntensityAmount);
         npTimeframe = (NumberPicker) myView.findViewById(R.id.npGoalIntensityTime);
         tvMeasurementNumber.setText("Number of measurements");
-        
+
         //Initialize the first NumberPicker
         npAmount.setMinValue(amountMin);
         npAmount.setMaxValue(amountMax);
         npAmount.setValue(amountDefault);
         npAmount.setWrapSelectorWheel(false);
 
+        if (itemType.equals("Weight")) {
+            weightMode();
+        } else if(itemType.equals("Blood Glucose")) {
+            bgMode();
+        }
+
 
         //handle the swiping to the next fragment by clicking on the button
         btn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                ((MainActivity) getActivity()).getViewPager().setCurrentItem(2);
+                //Move to the next fragment
+
+                // Create fragment and give it an argument specifying the article it should show
+                GoalRangeFragment newFragment = GoalRangeFragment.newInstance(itemName);
+                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+
+// Replace whatever is in the fragment_container view with this fragment,
+// and add the transaction to the back stack so the user can navigate back
+                transaction.replace(R.id.fragment_container, newFragment);
+                transaction.addToBackStack(null);
+
+// Commit the transaction
+                transaction.commit();
+
             }
         });
 
@@ -100,9 +133,9 @@ public class GoalIntensityFragment extends Fragment {
     }
 
     public void weightMode(){
-        amountMin = 1;
-        amountMax = 10;
-        amountDefault = 3;
+        npAmount.setMinValue(1);
+        npAmount.setMaxValue(3);
+        npAmount.setValue(2);
         Log.d(TAG, "weightMode: called");
     }
 

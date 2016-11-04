@@ -26,11 +26,15 @@ public class GoalRangeFragment extends Fragment {
     private int maxRangeDefault;
     private int minSelectedValue;
     private int maxSelectedValue;
-
     private String type;
+    private static final String ARG_PARAM1 = "txt";
+    private String itemType;
 
     public static GoalRangeFragment newInstance() {
         GoalRangeFragment fragment = new GoalRangeFragment();
+        Bundle args = new Bundle();
+        args.putString(ARG_PARAM1, itemName);
+        fragment.setArguments(args);
         return fragment;
     }
 
