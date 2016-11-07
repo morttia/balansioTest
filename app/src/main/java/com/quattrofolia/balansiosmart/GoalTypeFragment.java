@@ -18,8 +18,6 @@ import android.widget.LinearLayout;
  */
 
 public class GoalTypeFragment extends Fragment implements RecyclerViewClickListener {
-    DataTypePasser dataPasser;
-    Activity activity;
 
     private RecyclerView recyclerView;
     private GoalTypeAdapter goalTypeAdapter;
@@ -39,22 +37,7 @@ public class GoalTypeFragment extends Fragment implements RecyclerViewClickListe
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         goalTypeAdapter = new GoalTypeAdapter(GoalTypeListData.getListData(), getActivity(), this);
         recyclerView.setAdapter(goalTypeAdapter);
-
-
-        //calling pass data with the type
-        passData("kcal");
         return myView;
-    }
-
-    @Override
-    public void onAttach(Context c) {
-        super.onAttach(c);
-        activity = getActivity();
-        dataPasser = (DataTypePasser) activity;
-    }
-
-    public void passData(String data) {
-        dataPasser.setSelectedDataType(data);
     }
 
     @Override

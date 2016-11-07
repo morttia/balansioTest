@@ -2,9 +2,8 @@ package com.quattrofolia.balansiosmart;
 
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
-import android.util.Log;
 
-public class MainActivity extends FragmentActivity implements DataTypePasser {
+public class MainActivity extends FragmentActivity{
     String LOG = "debyg";
     private String selectedDataType;
 
@@ -35,17 +34,5 @@ public class MainActivity extends FragmentActivity implements DataTypePasser {
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.fragment_container, typeFragment).commit();
         }
-
-    }
-
-    @Override
-    public void setSelectedDataType(String data) {
-        Log.d(LOG+"selected dataype",data);
-        selectedDataType = data;
-    }
-
-    @Override
-    public String getSelectedDataType(){
-        return selectedDataType;
     }
 }

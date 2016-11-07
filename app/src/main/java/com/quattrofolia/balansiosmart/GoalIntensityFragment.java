@@ -27,13 +27,13 @@ public class GoalIntensityFragment extends Fragment {
     private TextView tvTimeframe;
     private Button btn;
     private int selectedAmount;
-    private String selectedTime;
+    private String selectedTimeframe;
     private String TAG = "IntensityFragment";
     private NumberPicker npTimeframe;
     private NumberPicker npAmount;
     private final String[] values = {"day","week", "month"};
     private static final String ARG_PARAM1 = "txt";
-    private String itemType;
+    private String goalType;
 
     public static GoalIntensityFragment newInstance(String itemName) {
         GoalIntensityFragment fragment = new GoalIntensityFragment();
@@ -47,11 +47,11 @@ public class GoalIntensityFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         if (getArguments() != null) {
-            itemType = getArguments().getString(ARG_PARAM1);
+            goalType = getArguments().getString(ARG_PARAM1);
         } else {
             Log.d(TAG, "onCreate: arguments null");
         }
-        Log.d(TAG, "onCreate: selected type: "+itemType);
+        Log.d(TAG, "onCreate: selected type: "+goalType);
 
         amountMin = 1;
         amountMax = 10;
@@ -59,6 +59,7 @@ public class GoalIntensityFragment extends Fragment {
         timeMin = 0;
         timeMax = values.length-1;
         timeDefault = 0;
+        selectedAmount = amountDefault;
     }
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -76,9 +77,9 @@ public class GoalIntensityFragment extends Fragment {
         npAmount.setValue(amountDefault);
         npAmount.setWrapSelectorWheel(false);
 
-        if (itemType.equals("Weight")) {
+        if (goalType.equals("Weight")) {
             weightMode();
-        } else if(itemType.equals("Blood Glucose")) {
+        } else if(goalType.equals("Blood Glucose")) {
             bgMode();
         }
 
@@ -89,7 +90,8 @@ public class GoalIntensityFragment extends Fragment {
                 //Move to the next fragment
 
                 // Create fragment and give it an argument specifying the article it should show
-                GoalRangeFragment newFragment = GoalRangeFragment.newInstance(itemName);
+                Log.d(TAG, "onClick: about to create a fragment, goalType: "+goalType+" selected amount: "+selectedAmount+" selected timeframe: "+selectedTimeframe);
+                GoalRangeFragment newFragment = GoalRangeFragment.newInstance(goalType, selectedAmount, selectedTimeframe);
                 FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
 
 // Replace whatever is in the fragment_container view with this fragment,
@@ -124,8 +126,8 @@ public class GoalIntensityFragment extends Fragment {
             @Override
             public void onValueChange(NumberPicker picker, int oldVal, int newVal){
                 //Set the selected value to a variable
-                selectedTime = values[newVal];
-                Log.d(TAG, "onValueChange: selectedTime: "+selectedTime);
+                selectedTimeframe = values[newVal];
+                Log.d(TAG, "onValueChange: selectedTimeframe: "+selectedTimeframe);
             }
         });
 
@@ -133,13 +135,17 @@ public class GoalIntensityFragment extends Fragment {
     }
 
     public void weightMode(){
+        int weightDefaultAmount = 2;
         npAmount.setMinValue(1);
         npAmount.setMaxValue(3);
-        npAmount.setValue(2);
+        npAmount.setValue(weightDefaultAmount);
+        selectedAmount = weightDefaultAmount;
+        selectedTimeframe = values[0];
         Log.d(TAG, "weightMode: called");
     }
 
     public void bgMode(){
+        selectedTimeframe = values[0];
         npTimeframe.setVisibility(View.GONE);
         tvTimeframe.setVisibility(View.GONE);
         tvMeasurementNumber.setText("Number of measurements a day");
@@ -147,8 +153,8 @@ public class GoalIntensityFragment extends Fragment {
         Log.d(TAG, "bgMode: ");
     }
 
-    public String getSelectedTime() {
-        return selectedTime;
+    public String getselectedTimeframe() {
+        return selectedTimeframe;
     }
 
     public int getSelectedAmount() {
