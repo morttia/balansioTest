@@ -34,8 +34,6 @@ public class GoalRangeFragment extends Fragment {
     private int measurementAmount = 0;
     private String timeframe;
     private Button btn;
-    //private static final String ARG_TYPE = "txt";
-    //private static final String ARG_AMOUNT = "txt";
     private static final String ARG_TIMEFRAME = "txt";
 
 
@@ -51,6 +49,15 @@ public class GoalRangeFragment extends Fragment {
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        userWeight = 70;
+        minRangeMin = 50;
+        minRangeMax = 150;
+        minRangeDefault = 80;
+        minSelectedValue = minRangeDefault;
+        maxRangeMin = 50;
+        maxRangeMax = 150;
+        maxRangeDefault = 120;
+        maxSelectedValue = maxRangeDefault;
 
         if (getArguments() != null) {
             goalType = getArguments().getString("goalType");
@@ -62,18 +69,7 @@ public class GoalRangeFragment extends Fragment {
         } else {
             Log.d(TAG, "onCreate: arguments null");
         }
-
-        userWeight = 70;
-        minRangeMin = 50;
-        minRangeMax = 150;
-        minRangeDefault = 80;
-        minSelectedValue = minRangeDefault;
-        maxRangeMin = 50;
-        maxRangeMax = 150;
-        maxRangeDefault = 120;
-        maxSelectedValue = maxRangeDefault;
     }
-
 
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -85,7 +81,6 @@ public class GoalRangeFragment extends Fragment {
         tv.setText("This is the goal ideal input range fragment");
 
         // picker values are set according to the type
-
         npMin.setMaxValue(minRangeMax);
         npMin.setMinValue(minRangeMin);
         npMin.setValue(minRangeDefault);
@@ -93,11 +88,9 @@ public class GoalRangeFragment extends Fragment {
         npMax.setMinValue(maxRangeMin);
         npMax.setValue(maxRangeDefault);
 
-
         if (goalType.equals("Weight")) {
             weightMode();
         }
-
 
         npMin.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
             @Override
@@ -111,7 +104,6 @@ public class GoalRangeFragment extends Fragment {
         npMax.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
             @Override
             public void onValueChange(NumberPicker picker, int oldVal, int newVal){
-                //Display the newly selected number from picker
                 Log.d(TAG, "onValueChange: max: "+newVal);
                 maxSelectedValue = newVal;
             }
@@ -126,12 +118,12 @@ public class GoalRangeFragment extends Fragment {
                 GoalNotificationFragment newFragment = GoalNotificationFragment.newInstance(goalType, measurementAmount, timeframe, minSelectedValue, maxSelectedValue);
                 FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
 
-// Replace whatever is in the fragment_container view with this fragment,
-// and add the transaction to the back stack so the user can navigate back
+                // Replace whatever is in the fragment_container view with this fragment,
+                // and add the transaction to the back stack so the user can navigate back
                 transaction.replace(R.id.fragment_container, newFragment);
                 transaction.addToBackStack(null);
 
-// Commit the transaction
+                // Commit the transaction
                 transaction.commit();
             }
         });

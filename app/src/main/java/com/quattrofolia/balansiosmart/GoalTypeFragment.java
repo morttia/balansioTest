@@ -1,7 +1,5 @@
 package com.quattrofolia.balansiosmart;
 
-import android.app.Activity;
-import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -18,14 +16,8 @@ import android.widget.LinearLayout;
  */
 
 public class GoalTypeFragment extends Fragment implements RecyclerViewClickListener {
-
     private RecyclerView recyclerView;
     private GoalTypeAdapter goalTypeAdapter;
-
-    public static GoalTypeFragment newInstance() {
-        GoalTypeFragment fragment = new GoalTypeFragment();
-        return fragment;
-    }
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,12 +40,12 @@ public class GoalTypeFragment extends Fragment implements RecyclerViewClickListe
         GoalIntensityFragment newFragment = GoalIntensityFragment.newInstance(itemName);
         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
 
-// Replace whatever is in the fragment_container view with this fragment,
-// and add the transaction to the back stack so the user can navigate back
+        // Replace whatever is in the fragment_container view with this fragment,
+        // and add the transaction to the back stack so the user can navigate back
         transaction.replace(R.id.fragment_container, newFragment);
         transaction.addToBackStack(null);
 
-// Commit the transaction
+        // Commit the transaction
         transaction.commit();
     }
 }

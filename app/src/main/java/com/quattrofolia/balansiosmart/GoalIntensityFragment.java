@@ -81,27 +81,40 @@ public class GoalIntensityFragment extends Fragment {
             weightMode();
         } else if(goalType.equals("Blood Glucose")) {
             bgMode();
+        } else if (goalType.equals("Sleep")) {
+            sleepMode();
+        } else if (goalType.equals("Exercise")) {
+            execriseMode();
         }
 
 
         //handle the swiping to the next fragment by clicking on the button
         btn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+
                 //Move to the next fragment
+                if (goalType.equals("Sleep") || goalType.equals("Exercise")) {
+                    // Create fragment and give it an argument specifying the article it should show
+                    Log.d(TAG, "onClick: about to create a fragment, goalType: " + goalType + " selected amount: " + selectedAmount + " selected timeframe: " + selectedTimeframe);
+                    GoalNotificationFragment newFragment = GoalNotificationFragment.newInstance(goalType, selectedAmount, selectedTimeframe, 0, 0);
+                    FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
 
-                // Create fragment and give it an argument specifying the article it should show
-                Log.d(TAG, "onClick: about to create a fragment, goalType: "+goalType+" selected amount: "+selectedAmount+" selected timeframe: "+selectedTimeframe);
-                GoalRangeFragment newFragment = GoalRangeFragment.newInstance(goalType, selectedAmount, selectedTimeframe);
-                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                    // Replace whatever is in the fragment_container view with this fragment,
+                    // and add the transaction to the back stack so the user can navigate back
+                    transaction.replace(R.id.fragment_container, newFragment);
+                    transaction.addToBackStack(null);
 
-// Replace whatever is in the fragment_container view with this fragment,
-// and add the transaction to the back stack so the user can navigate back
-                transaction.replace(R.id.fragment_container, newFragment);
-                transaction.addToBackStack(null);
+                    // Commit the transaction
+                    transaction.commit();
+                } else {
+                    Log.d(TAG, "onClick: about to create a fragment, goalType: " + goalType + " selected amount: " + selectedAmount + " selected timeframe: " + selectedTimeframe);
+                    GoalRangeFragment newFragment = GoalRangeFragment.newInstance(goalType, selectedAmount, selectedTimeframe);
+                    FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                    transaction.replace(R.id.fragment_container, newFragment);
+                    transaction.addToBackStack(null);
+                    transaction.commit();
 
-// Commit the transaction
-                transaction.commit();
-
+                }
             }
         });
 
@@ -137,11 +150,11 @@ public class GoalIntensityFragment extends Fragment {
     public void weightMode(){
         int weightDefaultAmount = 2;
         npAmount.setMinValue(1);
-        npAmount.setMaxValue(3);
+        npAmount.setMaxValue(10);
         npAmount.setValue(weightDefaultAmount);
         selectedAmount = weightDefaultAmount;
         selectedTimeframe = values[0];
-        Log.d(TAG, "weightMode: called");
+        Log.d(TAG, "weightMode: ");
     }
 
     public void bgMode(){
@@ -153,11 +166,21 @@ public class GoalIntensityFragment extends Fragment {
         Log.d(TAG, "bgMode: ");
     }
 
-    public String getselectedTimeframe() {
-        return selectedTimeframe;
+    public void sleepMode(){
+        selectedTimeframe = values[0];
+        npTimeframe.setVisibility(View.GONE);
+        tvTimeframe.setVisibility(View.GONE);
+        tvMeasurementNumber.setText("Hours of sleep per night");
+        tvMeasurementNumber.setPaddingRelative(0,300,0,0);
+        Log.d(TAG, "sleepMode: ");
     }
 
-    public int getSelectedAmount() {
-        return selectedAmount;
+    public void execriseMode(){
+        selectedTimeframe = values[1];
+        npTimeframe.setVisibility(View.GONE);
+        tvTimeframe.setVisibility(View.GONE);
+        tvMeasurementNumber.setText("Times of exercise a week");
+        tvMeasurementNumber.setPaddingRelative(0,300,0,0);
+        Log.d(TAG, "execriseMode: ");
     }
 }
