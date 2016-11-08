@@ -12,6 +12,8 @@ import android.widget.NumberPicker;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import static android.content.ContentValues.TAG;
+
 /**
  * Created by eemeliheinonen on 27/10/2016.
  */
@@ -28,7 +30,6 @@ public class GoalIntensityFragment extends Fragment {
     private Button btn;
     private int selectedAmount;
     private String selectedTimeframe;
-    private String TAG = "IntensityFragment";
     private NumberPicker npTimeframe;
     private NumberPicker npAmount;
     private final String[] values = {"day","week", "month"};
@@ -45,14 +46,6 @@ public class GoalIntensityFragment extends Fragment {
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        if (getArguments() != null) {
-            goalType = getArguments().getString(ARG_PARAM1);
-        } else {
-            Log.d(TAG, "onCreate: arguments null");
-        }
-        Log.d(TAG, "onCreate: selected type: "+goalType);
-
         amountMin = 1;
         amountMax = 10;
         amountDefault = 5;
@@ -60,6 +53,14 @@ public class GoalIntensityFragment extends Fragment {
         timeMax = values.length-1;
         timeDefault = 0;
         selectedAmount = amountDefault;
+
+        //get data from the previous fragment
+        if (getArguments() != null) {
+            goalType = getArguments().getString(ARG_PARAM1);
+        } else {
+            Log.d(TAG, "onCreate: arguments null");
+        }
+        Log.d(TAG, "onCreate: selected type: "+goalType);
     }
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -71,12 +72,37 @@ public class GoalIntensityFragment extends Fragment {
         npTimeframe = (NumberPicker) myView.findViewById(R.id.npGoalIntensityTime);
         tvMeasurementNumber.setText("Number of measurements");
 
-        //Initialize the first NumberPicker
+        //Initialize the NumberPickers
         npAmount.setMinValue(amountMin);
         npAmount.setMaxValue(amountMax);
         npAmount.setValue(amountDefault);
         npAmount.setWrapSelectorWheel(false);
+        npTimeframe.setDisplayedValues(values);
+        npTimeframe.setMinValue(timeMin);
+        npTimeframe.setMaxValue(timeMax);
+        npTimeframe.setValue(timeDefault);
 
+        //Set a value change listener for amount NumberPicker
+        npAmount.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+            @Override
+            public void onValueChange(NumberPicker picker, int oldVal, int newVal){
+                //Set the selected value to a variable
+                selectedAmount = newVal;
+                Log.d(TAG, "onValueChange: selectedAmount: "+selectedAmount);
+            }
+        });
+
+        //Set a value change listener for time NumberPicker
+        npTimeframe.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+            @Override
+            public void onValueChange(NumberPicker picker, int oldVal, int newVal){
+                //Set the selected value to a variable
+                selectedTimeframe = values[newVal];
+                Log.d(TAG, "onValueChange: selectedTimeframe: "+selectedTimeframe);
+            }
+        });
+
+        //check if a certain goal type has been selected & modify the fragment accordingly
         if (goalType.equals("Weight")) {
             weightMode();
         } else if(goalType.equals("Blood Glucose")) {
@@ -86,7 +112,6 @@ public class GoalIntensityFragment extends Fragment {
         } else if (goalType.equals("Exercise")) {
             execriseMode();
         }
-
 
         //handle the swiping to the next fragment by clicking on the button
         btn.setOnClickListener(new View.OnClickListener() {
@@ -98,6 +123,7 @@ public class GoalIntensityFragment extends Fragment {
                     Log.d(TAG, "onClick: about to create a fragment, goalType: " + goalType + " selected amount: " + selectedAmount + " selected timeframe: " + selectedTimeframe);
                     GoalNotificationFragment newFragment = GoalNotificationFragment.newInstance(goalType, selectedAmount, selectedTimeframe, 0, 0);
                     FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                    transaction.setCustomAnimations(R.anim.enter, R.anim.exit);
 
                     // Replace whatever is in the fragment_container view with this fragment,
                     // and add the transaction to the back stack so the user can navigate back
@@ -110,43 +136,17 @@ public class GoalIntensityFragment extends Fragment {
                     Log.d(TAG, "onClick: about to create a fragment, goalType: " + goalType + " selected amount: " + selectedAmount + " selected timeframe: " + selectedTimeframe);
                     GoalRangeFragment newFragment = GoalRangeFragment.newInstance(goalType, selectedAmount, selectedTimeframe);
                     FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                    transaction.setCustomAnimations(R.anim.enter, R.anim.exit);
                     transaction.replace(R.id.fragment_container, newFragment);
                     transaction.addToBackStack(null);
                     transaction.commit();
-
                 }
             }
         });
-
-        //Set a value change listener for amount NumberPicker
-        npAmount.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
-            @Override
-            public void onValueChange(NumberPicker picker, int oldVal, int newVal){
-                //Set the selected value to a variable
-                selectedAmount = newVal;
-                Log.d(TAG, "onValueChange: selectedAmount: "+selectedAmount);
-            }
-        });
-
-        //Initialize the second NumberPicker
-        npTimeframe.setDisplayedValues(values);
-        npTimeframe.setMinValue(timeMin);
-        npTimeframe.setMaxValue(timeMax);
-        npTimeframe.setValue(timeDefault);
-
-        //Set a value change listener for time NumberPicker
-        npTimeframe.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
-            @Override
-            public void onValueChange(NumberPicker picker, int oldVal, int newVal){
-                //Set the selected value to a variable
-                selectedTimeframe = values[newVal];
-                Log.d(TAG, "onValueChange: selectedTimeframe: "+selectedTimeframe);
-            }
-        });
-
         return myView;
     }
 
+    //Methods for initializing the fragment for different goal types.
     public void weightMode(){
         int weightDefaultAmount = 2;
         npAmount.setMinValue(1);

@@ -31,10 +31,9 @@ public class GoalRangeFragment extends Fragment {
     private int maxSelectedValue;
     private int userWeight;
     private String goalType;
-    private int measurementAmount = 0;
+    private int measurementAmount;
     private String timeframe;
     private Button btn;
-    private static final String ARG_TIMEFRAME = "txt";
 
 
     public static GoalRangeFragment newInstance(String goalType, int measurementAmount, String timeframe) {
@@ -42,7 +41,7 @@ public class GoalRangeFragment extends Fragment {
         Bundle args = new Bundle();
         args.putString("goalType", goalType);
         args.putInt("intAmount", measurementAmount);
-        args.putString(ARG_TIMEFRAME, timeframe);
+        args.putString("timeframe", timeframe);
         fragment.setArguments(args);
         return fragment;
     }
@@ -59,10 +58,11 @@ public class GoalRangeFragment extends Fragment {
         maxRangeDefault = 120;
         maxSelectedValue = maxRangeDefault;
 
+        //get data from the previous fragments
         if (getArguments() != null) {
             goalType = getArguments().getString("goalType");
             measurementAmount = getArguments().getInt("intAmount");
-            timeframe = getArguments().getString(ARG_TIMEFRAME);
+            timeframe = getArguments().getString("timeframe");
             Log.d(TAG, "onCreate: goalType is "+goalType);
             Log.d(TAG, "onCreate: measurementAmount is "+measurementAmount);
             Log.d(TAG, "onCreate: timeframe is "+timeframe);
@@ -80,7 +80,7 @@ public class GoalRangeFragment extends Fragment {
         btn = (Button) myView.findViewById(R.id.btnRangeNext);
         tv.setText("This is the goal ideal input range fragment");
 
-        // picker values are set according to the type
+        // Initialize the pickers
         npMin.setMaxValue(minRangeMax);
         npMin.setMinValue(minRangeMin);
         npMin.setValue(minRangeDefault);
@@ -88,6 +88,7 @@ public class GoalRangeFragment extends Fragment {
         npMax.setMinValue(maxRangeMin);
         npMax.setValue(maxRangeDefault);
 
+        //check if a certain goal type has been selected & modify the fragment accordingly
         if (goalType.equals("Weight")) {
             weightMode();
         }
@@ -117,6 +118,7 @@ public class GoalRangeFragment extends Fragment {
                 // Create fragment and give it an argument specifying the article it should show
                 GoalNotificationFragment newFragment = GoalNotificationFragment.newInstance(goalType, measurementAmount, timeframe, minSelectedValue, maxSelectedValue);
                 FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                transaction.setCustomAnimations(R.anim.enter, R.anim.exit);
 
                 // Replace whatever is in the fragment_container view with this fragment,
                 // and add the transaction to the back stack so the user can navigate back
@@ -127,10 +129,10 @@ public class GoalRangeFragment extends Fragment {
                 transaction.commit();
             }
         });
-
         return myView;
     }
 
+    //Methods for initializing the fragment for different goal types.
     public void weightMode(){
         npMin.setMinValue(userWeight-10);
         npMin.setMaxValue(userWeight);

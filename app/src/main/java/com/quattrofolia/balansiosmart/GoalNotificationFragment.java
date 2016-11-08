@@ -42,6 +42,7 @@ public class GoalNotificationFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        //get data from the previous fragments
         if (getArguments() != null) {
             goalType = getArguments().getString("goalType");
             measurementAmount = getArguments().getInt("amount");
