@@ -67,34 +67,17 @@ public class DataModelTest {
         // Init test dates
         now = new DateTime();
         yesterday = now.minusDays(1);
-        // yesterdayMidnight = midnightByDate(yesterday);
-        // yesterdayAfterMidnight = yesterdayMidnight.plusMillis(ms);
         bgRandomTimesYesterday = randomTimes(r.nextInt(5), yesterday);
-        // todayMidnight = midnightByDate(now);
-        // yesterdayBeforeMidnight = todayMidnight.minusMillis(ms);
-        // todayAfterMidnight = todayMidnight.plusMillis(ms);
         todayRandomTimes = randomTimes(r.nextInt(4), now);
-        // tomorrowMidnight = todayMidnight.plusDays(1);
-        // todayBeforeMidnight = tomorrowMidnight.minusMillis(ms);
-        // tomorrowAfterMidnight = tomorrowMidnight.plusMillis(ms);
 
         // Create test entries
         healthDataEntries = new ArrayList<>();
-        // healthDataEntries.add(new HealthDataEntry(bgType, randomBgValue(), yesterdayMidnight.toInstant()));
-        // healthDataEntries.add(new HealthDataEntry(bgType, randomBgValue(), yesterdayAfterMidnight.toInstant()));
         for (DateTime dt : bgRandomTimesYesterday) {
             healthDataEntries.add(new HealthDataEntry(bgType, randomBgValue(), dt.toInstant()));
         }
-        // healthDataEntries.add(new HealthDataEntry(bgType, randomBgValue(), yesterdayBeforeMidnight.toInstant()));
-        // healthDataEntries.add(new HealthDataEntry(bgType, randomBgValue(), todayMidnight.toInstant()));
-        // healthDataEntries.add(new HealthDataEntry(bgType, randomBgValue(), todayAfterMidnight.toInstant()));
         for (DateTime dt : todayRandomTimes) {
             healthDataEntries.add(new HealthDataEntry(bgType, randomBgValue(), dt.toInstant()));
         }
-        // healthDataEntries.add(new HealthDataEntry(bgType, randomBgValue(), todayBeforeMidnight.toInstant()));
-        // healthDataEntries.add(new HealthDataEntry(bgType, randomBgValue(), tomorrowMidnight.toInstant()));
-        // healthDataEntries.add(new HealthDataEntry(bgType, randomBgValue(), tomorrowAfterMidnight.toInstant()));
-
         healthDataEntries.add(new HealthDataEntry(weightType, randomWeightValue(), new DateTime(2016, 11, 7, 12, 5).toInstant()));
     }
 
@@ -112,24 +95,34 @@ public class DataModelTest {
 
             Discipline discipline = goal.getDiscipline();
 
-            Interval currentPeriod = goal
-                    .getDiscipline()
+            // Define the period to which narrow down the sample pool
+            Interval monitoringPeriod =
+                    discipline
                     .getMonitoringPeriod()
                     .quantizedInterval(null, 0);
 
             // Clone the sample pool
             List<HealthDataEntry> filteredEntries = new ArrayList<>(healthDataEntries);
 
-            /*Filter out unwanted samples*/
+            // Filter out unwanted samples
             Iterator<HealthDataEntry> evalIterator = filteredEntries.iterator();
             while (evalIterator.hasNext()) {
                 HealthDataEntry entry = evalIterator.next();
-                if (!currentPeriod.contains(entry.getInstant()) ||
+                if (!monitoringPeriod.contains(entry.getInstant()) ||
                         entry.getType() != goal.getType()) {
                     evalIterator.remove();
                 }
             }
-            System.out.println("Goal " + goal.getType().toString() + "completion for current " + discipline.getMonitoringPeriod().name() + ": " + filteredEntries.size() + "/" + discipline.getFrequency());
+
+            // Print result
+            System.out.println("Goal "
+                    + goal.getType().toString()
+                    + "completion for current "
+                    + discipline.getMonitoringPeriod().name()
+                    + ": "
+                    + filteredEntries.size()
+                    + "/"
+                    + discipline.getFrequency());
         }
     }
 
