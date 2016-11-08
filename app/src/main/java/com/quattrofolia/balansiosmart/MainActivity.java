@@ -10,7 +10,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Realm.init(this); // Initialize Realm only once when the app starts. 
+        Realm.init(this); // Initialize Realm only once when the app starts.
         setContentView(R.layout.activity_main);
     }
 }

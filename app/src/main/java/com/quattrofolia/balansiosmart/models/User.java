@@ -1,12 +1,11 @@
 package com.quattrofolia.balansiosmart.models;
 
-import java.util.ArrayList;
-
+import io.realm.RealmList;
 import io.realm.RealmObject;
 
 public class User extends RealmObject {
-    public ArrayList<Goal> goals;
+    public RealmList<Goal> goals;
     public User() {
-        this.goals = new ArrayList<Goal>();
+        this.goals = new RealmList<>();
     }
 }
