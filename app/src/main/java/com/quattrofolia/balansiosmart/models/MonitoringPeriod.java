@@ -9,56 +9,78 @@ import org.joda.time.Interval;
 * evaluating goal accomplishments.
 *
 * Each value is assigned with a function that returns a Joda
-* Instant object.  */
+* Interval object.  */
 
 public enum MonitoringPeriod {
-    DAY {
+    DAY ("day") {
         @Override
-        public Interval interval(Instant refInstant) {
-            DateTime midnight = this.midnight(refInstant);
-            DateTime timeStarting = midnight;
-            DateTime timeEnding = timeStarting.plusDays(1);
-            return new Interval(timeStarting.toInstant(), timeEnding.toInstant());
+        public Interval quantizedInterval(Instant pointer, int transposition) {
+            if (pointer == null) {
+                pointer = new Instant();
+            }
+            DateTime midnight = this.midnight(pointer.toDateTime());
+            DateTime dateStarting = midnight.plusDays(transposition);
+            DateTime dateEnding = dateStarting.toDateTime().plusDays(1);
+            return new Interval(dateStarting, dateEnding);
         }
     },
-    WEEK {
+    WEEK ("week") {
         @Override
-        public Interval interval(Instant refInstant) {
-            DateTime midnight = this.midnight(refInstant);
-            int dayOfWeek = refInstant.toDateTime().getDayOfWeek();
-            DateTime timeStarting = midnight.minusDays(dayOfWeek-1);
-            DateTime timeEnding = timeStarting.plusWeeks(1);
-            return new Interval(timeStarting.toInstant(), timeEnding.toInstant());
+        public Interval quantizedInterval(Instant pointer, int transposition) {
+            if (pointer == null) {
+                pointer = new Instant();
+            }
+            int dayOfWeek = pointer.toDateTime().getDayOfWeek();
+            DateTime midnight = this.midnight(pointer.toDateTime());
+            DateTime mondayMidnight = midnight.toDateTime().minusDays(dayOfWeek-1);
+            DateTime dateStarting = mondayMidnight.plusWeeks(transposition);
+            DateTime dateEnding = dateStarting.toDateTime().plusWeeks(1);
+            return new Interval(dateStarting, dateEnding);
         }
     },
-    MONTH {
+    MONTH ("month") {
         @Override
-        public Interval interval(Instant refInstant) {
-            DateTime midnight = this.midnight(refInstant);
-            int dayOfMonth = refInstant.toDateTime().getDayOfMonth();
-            DateTime timeStarting = midnight.minusDays(dayOfMonth-1);
-            DateTime timeEnding = timeStarting.plusMonths(1);
-            return new Interval(timeStarting.toInstant(), timeEnding.toInstant());
+        public Interval quantizedInterval(Instant pointer, int transposition) {
+            if (pointer == null) {
+                pointer = new Instant();
+            }
+            int dayOfMonth = pointer.toDateTime().getDayOfMonth();
+            DateTime midnight = this.midnight(pointer.toDateTime());
+            DateTime firstDayOfMonth = midnight.toDateTime().minusDays(dayOfMonth-1);
+            DateTime dateStarting = firstDayOfMonth.plusMonths(transposition);
+            DateTime dateEnding = dateStarting.toDateTime().plusWeeks(1);
+            return new Interval(dateStarting, dateEnding);
         }
     },
-    YEAR {
+    YEAR ("year") {
         @Override
-        public Interval interval(Instant refInstant) {
-            DateTime midnight = this.midnight(refInstant);
-            int dayOfYear = refInstant.toDateTime().getDayOfYear();
-            DateTime timeStarting = midnight.minusDays(dayOfYear-1);
-            DateTime timeEnding = timeStarting.plusYears(1);
-            return new Interval(timeStarting.toInstant(), timeEnding.toInstant());
+        public Interval quantizedInterval(Instant pointer, int transposition) {
+            if (pointer == null) {
+                pointer = new Instant();
+            }
+            int dayOfYear = pointer.toDateTime().getDayOfYear();
+            DateTime midnight = this.midnight(pointer.toDateTime());
+            DateTime firstDayOfYear = midnight.toDateTime().minusDays(dayOfYear-1);
+            DateTime dateStarting = firstDayOfYear.plusYears(transposition);
+            DateTime dateEnding = dateStarting.toDateTime().plusWeeks(1);
+            return new Interval(dateStarting, dateEnding);
         }
     };
 
-    public abstract Interval interval(Instant refInstant);
-    DateTime midnight(Instant refInstant) {
-        DateTime refInstantTime = refInstant.toDateTime();
+    private final String name;
+    MonitoringPeriod(String name) {
+        this.name = name;
+    }
+    public String toString() {
+        return this.name;
+    }
+
+    public abstract Interval quantizedInterval(Instant pointer, int transposition);
+    DateTime midnight(DateTime ref) {
         return new DateTime(
-                refInstantTime.getYear(),
-                refInstantTime.getMonthOfYear(),
-                refInstantTime.getDayOfMonth(),
+                ref.getYear(),
+                ref.getMonthOfYear(),
+                ref.getDayOfMonth(),
                 0,
                 0);
     }
