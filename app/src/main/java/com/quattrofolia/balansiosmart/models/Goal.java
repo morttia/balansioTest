@@ -1,8 +1,8 @@
 package com.quattrofolia.balansiosmart.models;
 
-import java.io.Serializable;
+import io.realm.RealmObject;
 
-public class Goal implements Serializable {
+public class Goal extends RealmObject {
     private final HealthDataType type;
     private final Discipline discipline;
     private final Range targetRange;

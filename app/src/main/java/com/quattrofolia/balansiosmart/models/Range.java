@@ -1,9 +1,10 @@
 package com.quattrofolia.balansiosmart.models;
 
-import java.io.Serializable;
 import java.math.BigDecimal;
 
-public class Range implements Serializable {
+import io.realm.RealmObject;
+
+public class Range extends RealmObject {
     private final BigDecimal low;
     private final BigDecimal high;
     public Range(BigDecimal low, BigDecimal high) {

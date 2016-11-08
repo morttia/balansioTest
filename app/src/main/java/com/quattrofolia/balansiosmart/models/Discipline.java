@@ -1,8 +1,8 @@
 package com.quattrofolia.balansiosmart.models;
 
-import java.io.Serializable;
+import io.realm.RealmObject;
 
-public class Discipline implements Serializable {
+public class Discipline extends RealmObject {
     private int frequency;
     private MonitoringPeriod monitoringPeriod;
 

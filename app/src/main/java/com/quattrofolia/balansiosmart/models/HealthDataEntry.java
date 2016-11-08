@@ -2,10 +2,11 @@ package com.quattrofolia.balansiosmart.models;
 
 import org.joda.time.Instant;
 
-import java.io.Serializable;
 import java.math.BigDecimal;
 
-public class HealthDataEntry implements Serializable {
+import io.realm.RealmObject;
+
+public class HealthDataEntry extends RealmObject {
     private final HealthDataType type;
     private final BigDecimal value;
     private final Instant instant;
