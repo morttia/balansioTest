@@ -12,10 +12,17 @@
     <com.quattrofolia.balansiosmart.cardstack.CardStack
         android:id="@+id/container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="300dp"
         android:clipChildren="false"
         android:clipToPadding="false"
         android:padding="20dp"
         app:stackMargin="40" />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/create_goal_button"
+        android:layout_below="@id/container"
+        android:text="Create Goal"
+        />
 
 </RelativeLayout>
