@@ -53,6 +53,7 @@ public class GoalIntensityFragment extends Fragment {
         timeMax = values.length-1;
         timeDefault = 0;
         selectedAmount = amountDefault;
+        selectedTimeframe = values[0];
 
         //get data from the previous fragment
         if (getArguments() != null) {
