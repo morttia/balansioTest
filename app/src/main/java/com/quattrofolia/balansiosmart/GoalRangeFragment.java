@@ -74,11 +74,11 @@ public class GoalRangeFragment extends Fragment {
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         RelativeLayout myView =(RelativeLayout) inflater.inflate(R.layout.goal_range_fragment, container, false);
-        TextView tv = (TextView) myView.findViewById(R.id.textViewGoalRange);
+        TextView tv = (TextView) myView.findViewById(R.id.textViewGoalRangeMin);
         npMin = (NumberPicker) myView.findViewById(R.id.numberPicker_min);
         npMax = (NumberPicker) myView.findViewById(R.id.numberPicker_max);
         btn = (Button) myView.findViewById(R.id.btnRangeNext);
-        tv.setText("This is the goal ideal input range fragment");
+        //tv.setText("Select the ideal range minimum value");
 
         // Initialize the pickers
         npMin.setMaxValue(minRangeMax);
@@ -136,8 +136,10 @@ public class GoalRangeFragment extends Fragment {
     public void weightMode(){
         npMin.setMinValue(userWeight-10);
         npMin.setMaxValue(userWeight);
+        npMin.setValue(userWeight-5);
         npMax.setMinValue(userWeight);
         npMax.setMaxValue(userWeight+10);
+        npMax.setValue(userWeight+5);
         Log.d(TAG, "weightMode: called");
     }
 }

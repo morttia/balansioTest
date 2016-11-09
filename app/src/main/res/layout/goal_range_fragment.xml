@@ -6,21 +6,30 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:hint="textView2"
-        android:id="@+id/textViewGoalRange"/>
+        android:text="Minimum value of the goal range"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/textViewGoalRangeMin"/>
 
     <NumberPicker
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/numberPicker_min"
-        android:layout_below="@id/textViewGoalRange"
+        android:layout_below="@id/textViewGoalRangeMin"
         />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Maximum value of the goal range"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/textViewGoalRangeMax"
+        android:layout_below="@id/numberPicker_min"/>
 
     <NumberPicker
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/numberPicker_max"
-        android:layout_below="@id/numberPicker_min"
+        android:layout_below="@id/textViewGoalRangeMax"
         />
 
     <Button

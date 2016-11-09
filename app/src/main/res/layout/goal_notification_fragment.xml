@@ -18,24 +18,46 @@
         android:id="@+id/textViewGoalNotification"
         android:text="Remind me to measure blood glucose."
         android:textSize="20sp" />
+    <!--
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-    <RadioButton
-        android:text="Beforehand "
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/radioButton" />
+                <RadioButton
+                    android:text="Beforehand "
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/radioButton" />
 
-    <RadioButton
-        android:text="On time"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/radioButton2" />
+                <RadioButton
+                    android:text="On time"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/radioButton2" />
 
-    <RadioButton
-        android:text="I forgot"
-        android:layout_width="match_parent"
+                <RadioButton
+                    android:text="If I forgot"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/radioButton3" />
+
+        </RadioGroup>
+        -->
+
+    <CheckBox
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/radioButton3" />
+        android:text="Beforehand" />
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="On time" />
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="If I forgot" />
+
 
     <Button
         android:text="Create Custom Rule"

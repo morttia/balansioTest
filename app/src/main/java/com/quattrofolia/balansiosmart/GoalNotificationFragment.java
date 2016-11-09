@@ -62,7 +62,7 @@ public class GoalNotificationFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         LinearLayout myView =(LinearLayout) inflater.inflate(R.layout.goal_notification_fragment, container, false);
         TextView tv = (TextView) myView.findViewById(R.id.textViewGoalNotification);
-        tv.setText("This is the goal notification intensity fragment");
+        tv.setText("Remind me to measure "+goalType);
         return myView;
     }
 }
