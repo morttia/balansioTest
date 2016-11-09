@@ -48,7 +48,7 @@ public enum MonitoringPeriod {
             DateTime midnight = this.midnight(pointer.toDateTime());
             DateTime firstDayOfMonth = midnight.toDateTime().minusDays(dayOfMonth-1);
             DateTime dateStarting = firstDayOfMonth.plusMonths(transposition);
-            DateTime dateEnding = dateStarting.toDateTime().plusWeeks(1);
+            DateTime dateEnding = dateStarting.toDateTime().plusMonths(1);
             return new Interval(dateStarting, dateEnding);
         }
     },

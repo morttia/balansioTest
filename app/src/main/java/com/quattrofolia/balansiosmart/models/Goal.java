@@ -8,8 +8,8 @@ public class Goal extends RealmObject {
     private Discipline discipline;
     private Range targetRange;
 
-    public void setType(String type) {
-        this.type = type;
+    public void setType(HealthDataType type) {
+        this.type = type.toString();
     }
 
     public void setDiscipline(Discipline discipline) {

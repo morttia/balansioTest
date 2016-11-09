@@ -15,11 +15,11 @@ public class Discipline extends RealmObject {
         this.frequency = frequency;
     }
 
-    public String getMonitoringPeriod() {
-        return monitoringPeriod;
+    public MonitoringPeriod getMonitoringPeriod() {
+        return MonitoringPeriod.valueOf(monitoringPeriod);
     }
 
-    public void setMonitoringPeriod(String monitoringPeriod) {
-        this.monitoringPeriod = monitoringPeriod;
+    public void setMonitoringPeriod(MonitoringPeriod monitoringPeriod) {
+        this.monitoringPeriod = monitoringPeriod.toString();
     }
 }

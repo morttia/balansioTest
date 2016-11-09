@@ -9,20 +9,20 @@ public class Range extends RealmObject {
     private String low;
     private String high;
 
-    public String getLow() {
-        return low;
+    public BigDecimal getLow() {
+        return new BigDecimal(low);
     }
 
-    public void setLow(String low) {
-        this.low = low;
+    public void setLow(BigDecimal low) {
+        this.low = low.toString();
     }
 
-    public String getHigh() {
-        return high;
+    public BigDecimal getHigh() {
+        return new BigDecimal(high);
     }
 
-    public void setHigh(String high) {
-        this.high = high;
+    public void setHigh(BigDecimal high) {
+        this.high = high.toString();
     }
 
 
