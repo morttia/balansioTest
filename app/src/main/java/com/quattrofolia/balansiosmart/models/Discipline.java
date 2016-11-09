@@ -3,13 +3,9 @@ package com.quattrofolia.balansiosmart.models;
 import io.realm.RealmObject;
 
 public class Discipline extends RealmObject {
-    private int frequency;
-    private MonitoringPeriod monitoringPeriod;
 
-    public Discipline(int frequency, MonitoringPeriod monitoringPeriod) {
-        this.frequency = frequency;
-        this.monitoringPeriod = monitoringPeriod;
-    }
+    private int frequency;
+    private String monitoringPeriod;
 
     public int getFrequency() {
         return frequency;
@@ -19,11 +15,11 @@ public class Discipline extends RealmObject {
         this.frequency = frequency;
     }
 
-    public MonitoringPeriod getMonitoringPeriod() {
+    public String getMonitoringPeriod() {
         return monitoringPeriod;
     }
 
-    public void setMonitoringPeriod(MonitoringPeriod monitoringPeriod) {
+    public void setMonitoringPeriod(String monitoringPeriod) {
         this.monitoringPeriod = monitoringPeriod;
     }
 }

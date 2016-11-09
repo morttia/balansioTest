@@ -5,7 +5,4 @@ import io.realm.RealmObject;
 
 public class User extends RealmObject {
     public RealmList<Goal> goals;
-    public User() {
-        this.goals = new RealmList<>();
-    }
 }

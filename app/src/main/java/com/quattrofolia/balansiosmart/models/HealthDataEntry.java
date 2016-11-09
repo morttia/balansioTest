@@ -2,34 +2,46 @@ package com.quattrofolia.balansiosmart.models;
 
 import org.joda.time.Instant;
 
-import java.math.BigDecimal;
-
 import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 
 public class HealthDataEntry extends RealmObject {
-    private final HealthDataType type;
-    private final BigDecimal value;
-    private final Instant instant;
 
-    public HealthDataType getType() {
-        return type;
+    @PrimaryKey
+    private long id;
+    private String type;
+    private String value;
+    private long instant;
+
+    public long getId() {
+        return id;
     }
 
-    public BigDecimal getValue() {
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public void setType(HealthDataType type) {
+        this.type = type.toString();
+    }
+
+    public void setValue(String value) {
+        this.value = value;
+    }
+
+    public void setInstant(Instant instant) {
+        this.instant = instant.getMillis();
+    }
+
+    public HealthDataType getType() {
+        return HealthDataType.valueOf(type);
+    }
+
+    public String getValue() {
         return value;
     }
 
     public Instant getInstant() {
-        return instant;
-    }
-
-    public HealthDataEntry(HealthDataType type, BigDecimal value) {
-        this(type, value, new Instant());
-    }
-
-    public HealthDataEntry(HealthDataType type, BigDecimal value, Instant instant) {
-        this.type = type;
-        this.value = value;
-        this.instant = instant;
+        return new Instant(instant);
     }
 }
