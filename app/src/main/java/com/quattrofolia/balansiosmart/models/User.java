@@ -1,11 +1,8 @@
 package com.quattrofolia.balansiosmart.models;
 
-import java.io.Serializable;
-import java.util.ArrayList;
+import io.realm.RealmList;
+import io.realm.RealmObject;
 
-public class User implements Serializable {
-    public ArrayList<Goal> goals;
-    public User() {
-        this.goals = new ArrayList<Goal>();
-    }
+public class User extends RealmObject {
+    public RealmList<Goal> goals;
 }

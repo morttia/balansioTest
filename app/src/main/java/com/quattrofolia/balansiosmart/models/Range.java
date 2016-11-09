@@ -1,22 +1,32 @@
 package com.quattrofolia.balansiosmart.models;
 
-import java.io.Serializable;
 import java.math.BigDecimal;
 
-public class Range implements Serializable {
-    private final BigDecimal low;
-    private final BigDecimal high;
-    public Range(BigDecimal low, BigDecimal high) {
+import io.realm.RealmObject;
+
+public class Range extends RealmObject {
+
+    private String low;
+    private String high;
+
+    public String getLow() {
+        return low;
+    }
+
+    public void setLow(String low) {
         this.low = low;
+    }
+
+    public String getHigh() {
+        return high;
+    }
+
+    public void setHigh(String high) {
         this.high = high;
     }
 
-    public Range(double low, double high) {
-        this.low = BigDecimal.valueOf(low);
-        this.high = BigDecimal.valueOf(high);
-    }
 
     public boolean contains(BigDecimal number) {
-        return (number.compareTo(low) >= 0 && number.compareTo(high) <= 0);
+        return (number.compareTo(new BigDecimal(low)) >= 0 && number.compareTo(new BigDecimal(high)) <= 0);
     }
 }

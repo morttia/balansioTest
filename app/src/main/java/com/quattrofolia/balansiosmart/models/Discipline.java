@@ -1,15 +1,11 @@
 package com.quattrofolia.balansiosmart.models;
 
-import java.io.Serializable;
+import io.realm.RealmObject;
 
-public class Discipline implements Serializable {
+public class Discipline extends RealmObject {
+
     private int frequency;
-    private MonitoringPeriod monitoringPeriod;
-
-    public Discipline(int frequency, MonitoringPeriod monitoringPeriod) {
-        this.frequency = frequency;
-        this.monitoringPeriod = monitoringPeriod;
-    }
+    private String monitoringPeriod;
 
     public int getFrequency() {
         return frequency;
@@ -19,11 +15,11 @@ public class Discipline implements Serializable {
         this.frequency = frequency;
     }
 
-    public MonitoringPeriod getMonitoringPeriod() {
+    public String getMonitoringPeriod() {
         return monitoringPeriod;
     }
 
-    public void setMonitoringPeriod(MonitoringPeriod monitoringPeriod) {
+    public void setMonitoringPeriod(String monitoringPeriod) {
         this.monitoringPeriod = monitoringPeriod;
     }
 }

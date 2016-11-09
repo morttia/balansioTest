@@ -3,11 +3,14 @@ package com.quattrofolia.balansiosmart;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 
+import io.realm.Realm;
+
 public class MainActivity extends FragmentActivity{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Realm.init(this); // Initialize Realm only once when the app starts.
         setContentView(R.layout.activity_main);
 
         // Check that the activity is using the layout version with
