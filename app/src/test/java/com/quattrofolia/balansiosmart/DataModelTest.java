@@ -3,8 +3,6 @@ package com.quattrofolia.balansiosmart;
 import com.quattrofolia.balansiosmart.models.Discipline;
 import com.quattrofolia.balansiosmart.models.Goal;
 import com.quattrofolia.balansiosmart.models.HealthDataEntry;
-import com.quattrofolia.balansiosmart.models.HealthDataType;
-import com.quattrofolia.balansiosmart.models.MonitoringPeriod;
 import com.quattrofolia.balansiosmart.models.Range;
 import com.quattrofolia.balansiosmart.models.User;
 
@@ -55,44 +53,38 @@ public class DataModelTest {
         // Init test dates
         now = new DateTime();
         yesterday = now.minusDays(1);
-        int random = r.nextInt(3);
-        System.out.println("random " + random);
+        int random = r.nextInt(4);
         bgRandomTimesYesterday = randomTimesInDay(random, yesterday);
-        System.out.println(bgRandomTimesYesterday.size());
-        random = r.nextInt(4);
-        System.out.println("random " + random);
+        random = r.nextInt(5);
         bgRandomTimesToday = randomTimesInDay(random, now);
-        System.out.println(bgRandomTimesToday.size());
         random = r.nextInt(3);
-        System.out.println("random " + random);
         weightRandomTimesThisMonth = randomTimesInMonth(random, now);
-        System.out.println(weightRandomTimesThisMonth.size());
 
         // Create test entries
         healthDataEntries = new ArrayList<>();
-        System.out.println(bgRandomTimesYesterday.size() + " random bg entries for yesterday:");
+        System.out.println(bgRandomTimesYesterday.size() + " randomized bg entries for yesterday:");
         for (DateTime dt : bgRandomTimesYesterday) {
             HealthDataEntry entry = new HealthDataEntry();
             entry.setType(BLOOD_GLUCOSE);
-            entry.setValue(randomBgValue().toString());
+            entry.setValue(randomBgValue());
             entry.setInstant(dt.toInstant());
             healthDataEntries.add(entry);
             printEntry(entry);
         }
-        System.out.println(bgRandomTimesToday.size() + " random bg entries for today:");
+        System.out.println(bgRandomTimesToday.size() + " randomized bg entries for today:");
         for (DateTime dt : bgRandomTimesToday) {
             HealthDataEntry entry = new HealthDataEntry();
             entry.setType(BLOOD_GLUCOSE);
-            entry.setValue(randomBgValue().toString());
+            entry.setValue(randomBgValue());
             entry.setInstant(dt.toInstant());
             healthDataEntries.add(entry);
             printEntry(entry);
         }
-        System.out.println(bgRandomTimesToday.size() + " random weight entries for this month:");
+        System.out.println(weightRandomTimesThisMonth.size() + " randomized weight entries for this month:");
         for (DateTime dt : weightRandomTimesThisMonth) {
             HealthDataEntry entry = new HealthDataEntry();
             entry.setType(WEIGHT);
-            entry.setValue(randomWeightValue().toString());
+            entry.setValue(randomWeightValue());
             entry.setInstant(dt.toInstant());
             healthDataEntries.add(entry);
             printEntry(entry);
@@ -102,22 +94,22 @@ public class DataModelTest {
     @Test
     public void createGoalForUser() throws Exception {
         bgDiscipline.setFrequency(4);
-        bgDiscipline.setMonitoringPeriod(day.toString());
+        bgDiscipline.setMonitoringPeriod(day);
         bgRange = new Range();
-        bgRange.setLow(new BigDecimal(3.8).toString());
-        bgRange.setHigh(new BigDecimal(4.2).toString());
+        bgRange.setLow(new BigDecimal(3.8));
+        bgRange.setHigh(new BigDecimal(4.2));
         bgGoal = new Goal();
-        bgGoal.setType(BLOOD_GLUCOSE.toString());
+        bgGoal.setType(BLOOD_GLUCOSE);
         bgGoal.setDiscipline(bgDiscipline);
         bgGoal.setTargetRange(bgRange);
 
         weightDiscipline.setFrequency(1);
-        weightDiscipline.setMonitoringPeriod(month.toString());
+        weightDiscipline.setMonitoringPeriod(month);
         weightRange = new Range();
-        weightRange.setLow(new BigDecimal(78).toString());
-        weightRange.setHigh(new BigDecimal(82).toString());
+        weightRange.setLow(new BigDecimal(78));
+        weightRange.setHigh(new BigDecimal(82));
         weightGoal = new Goal();
-        weightGoal.setType(WEIGHT.toString());
+        weightGoal.setType(WEIGHT);
         weightGoal.setDiscipline(weightDiscipline);
         weightGoal.setTargetRange(weightRange);
 
@@ -125,19 +117,21 @@ public class DataModelTest {
         user.goals.add(bgGoal);
         user.goals.add(weightGoal);
 
+        /*Following iterator checks the current progress status
+        * on each goal with previously generated mock values. */
         for (Goal goal : user.goals) {
 
             Discipline discipline = goal.getDiscipline();
 
             // Define the period to which narrow down the sample pool
-
-            Interval monitoringPeriod = MonitoringPeriod.valueOf(discipline.getMonitoringPeriod()).quantizedInterval(null, 0);
+            Interval monitoringPeriod = discipline.getMonitoringPeriod().quantizedInterval(null, 0);
+            System.out.println();
             System.out.println("Monitoring period " + monitoringPeriod.getStart() + " -> " + monitoringPeriod.getEnd());
 
             // Clone the sample pool
             List<HealthDataEntry> filteredEntries = new ArrayList<>(healthDataEntries);
 
-            // Filter out unwanted samples
+            // Filter out everything but samples of correct type within monitoring period
             Iterator<HealthDataEntry> evalIterator = filteredEntries.iterator();
             while (evalIterator.hasNext()) {
                 HealthDataEntry entry = evalIterator.next();
@@ -147,59 +141,20 @@ public class DataModelTest {
                 }
             }
 
-            System.out.println(goal.getType() + " entries:");
+            System.out.println("filtered " + goal.getType() + " entries:");
             printEntries(filteredEntries);
 
 
-            // Print result
+            // Print completion result
             System.out.println("Goal "
                     + goal.getType()
                     + " completion for current "
-                    + MonitoringPeriod.valueOf(discipline.getMonitoringPeriod()).name()
+                    + discipline.getMonitoringPeriod().name()
                     + ": "
                     + filteredEntries.size()
                     + "/"
                     + discipline.getFrequency());
         }
-    }
-
-    private List<HealthDataEntry> entriesByInterval(List<HealthDataEntry> fromEntries, Interval byInterval) {
-        List<HealthDataEntry> entries = new ArrayList<>();
-        for (HealthDataEntry entry : fromEntries) {
-            if (byInterval.contains(entry.getInstant())) {
-                entries.add(entry);
-            }
-        }
-        return entries;
-    }
-
-    private List<HealthDataEntry> entriesByType(List<HealthDataEntry> fromEntries, HealthDataType byType) {
-        List<HealthDataEntry> entries = new ArrayList<>();
-        for (HealthDataEntry entry : fromEntries) {
-            if (entry.getType() == byType) {
-                entries.add(entry);
-            }
-        }
-        return entries;
-    }
-
-    private int completed(Discipline discipline, List<HealthDataEntry> entryPool, Interval onPeriod, HealthDataType byType) {
-        List<HealthDataEntry> entriesByType = new ArrayList<>();
-        int accomplishments = 0;
-        int queryIndex = entryPool.size();
-        while (queryIndex >= 0) {
-            HealthDataEntry entry = entryPool.get(queryIndex);
-            if (entry.getType() == byType) {
-                entriesByType.add(entry);
-            }
-            queryIndex--;
-        }
-        for (HealthDataEntry entry : entriesByType) {
-            if (onPeriod.contains(entry.getInstant())) {
-                accomplishments++;
-            }
-        }
-        return accomplishments;
     }
 
     // Returns a random time on provided day

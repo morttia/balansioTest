@@ -2,6 +2,8 @@ package com.quattrofolia.balansiosmart.models;
 
 import org.joda.time.Instant;
 
+import java.math.BigDecimal;
+
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
@@ -25,8 +27,8 @@ public class HealthDataEntry extends RealmObject {
         this.type = type.toString();
     }
 
-    public void setValue(String value) {
-        this.value = value;
+    public void setValue(BigDecimal value) {
+        this.value = value.toString();
     }
 
     public void setInstant(Instant instant) {
