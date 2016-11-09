@@ -3,7 +3,6 @@ package com.quattrofolia.balansiosmart;
 import com.quattrofolia.balansiosmart.models.Discipline;
 import com.quattrofolia.balansiosmart.models.Goal;
 import com.quattrofolia.balansiosmart.models.HealthDataEntry;
-import com.quattrofolia.balansiosmart.models.HealthDataType;
 import com.quattrofolia.balansiosmart.models.Range;
 import com.quattrofolia.balansiosmart.models.User;
 
@@ -118,6 +117,8 @@ public class DataModelTest {
         user.goals.add(bgGoal);
         user.goals.add(weightGoal);
 
+        /*Following iterator checks the current progress status
+        * on each goal with previously generated mock values. */
         for (Goal goal : user.goals) {
 
             Discipline discipline = goal.getDiscipline();
@@ -144,7 +145,7 @@ public class DataModelTest {
             printEntries(filteredEntries);
 
 
-            // Print result
+            // Print completion result
             System.out.println("Goal "
                     + goal.getType()
                     + " completion for current "
@@ -154,45 +155,6 @@ public class DataModelTest {
                     + "/"
                     + discipline.getFrequency());
         }
-    }
-
-    private List<HealthDataEntry> entriesByInterval(List<HealthDataEntry> fromEntries, Interval byInterval) {
-        List<HealthDataEntry> entries = new ArrayList<>();
-        for (HealthDataEntry entry : fromEntries) {
-            if (byInterval.contains(entry.getInstant())) {
-                entries.add(entry);
-            }
-        }
-        return entries;
-    }
-
-    private List<HealthDataEntry> entriesByType(List<HealthDataEntry> fromEntries, HealthDataType byType) {
-        List<HealthDataEntry> entries = new ArrayList<>();
-        for (HealthDataEntry entry : fromEntries) {
-            if (entry.getType() == byType) {
-                entries.add(entry);
-            }
-        }
-        return entries;
-    }
-
-    private int completed(Discipline discipline, List<HealthDataEntry> entryPool, Interval onPeriod, HealthDataType byType) {
-        List<HealthDataEntry> entriesByType = new ArrayList<>();
-        int accomplishments = 0;
-        int queryIndex = entryPool.size();
-        while (queryIndex >= 0) {
-            HealthDataEntry entry = entryPool.get(queryIndex);
-            if (entry.getType() == byType) {
-                entriesByType.add(entry);
-            }
-            queryIndex--;
-        }
-        for (HealthDataEntry entry : entriesByType) {
-            if (onPeriod.contains(entry.getInstant())) {
-                accomplishments++;
-            }
-        }
-        return accomplishments;
     }
 
     // Returns a random time on provided day
