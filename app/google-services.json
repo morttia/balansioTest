@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "666547782459",
+    "firebase_url": "https://balansio-smart-94eb4.firebaseio.com",
+    "project_id": "balansio-smart-94eb4",
+    "storage_bucket": "balansio-smart-94eb4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:666547782459:android:dbbeb30357dd89be",
+        "android_client_info": {
+          "package_name": "com.quattrofolia.balansiosmart"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "666547782459-t1gdmbatqj67et14cehoprum04lvauj0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.quattrofolia.balansiosmart",
+            "certificate_hash": "3CABEC7FDB73375FC801D80813AFAD4B3BA7D548"
+          }
+        },
+        {
+          "client_id": "666547782459-m1gt815r86bpeddaisr8eqpsquhfieif.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA-LeNx34rK9H5iAHGVat2gi9vnlMl13-M"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "666547782459-m1gt815r86bpeddaisr8eqpsquhfieif.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
