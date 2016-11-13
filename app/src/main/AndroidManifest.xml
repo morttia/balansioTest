@@ -17,12 +17,10 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".MainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+        <activity android:name=".ProgressViewActivity">
+        </activity>
 
-                <category android:name="android.intent.category" />
-            </intent-filter>
+        <activity android:name=".MainActivity">
         </activity>
     </application>
 

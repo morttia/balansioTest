@@ -119,7 +119,8 @@ public class WelcomeSlider extends AppCompatActivity {
 
     private void launchHomeScreen() {
         prefManager.setFirstTimeLaunch(false);
-        startActivity(new Intent(WelcomeSlider.this, MainActivity.class));
+        // TODO: later to be changed to login or other view
+        startActivity(new Intent(WelcomeSlider.this, ProgressViewActivity.class));
         finish();
     }
 

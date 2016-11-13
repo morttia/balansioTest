@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView android:id="@+id/tvOverviewType"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView android:id="@+id/tvOverviewFrequency"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvOverviewType"/>
+
+    <TextView android:id="@+id/tvOverviewRangeMin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvOverviewFrequency"/>
+
+    <TextView android:id="@+id/tvOverviewRangeMax"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvOverviewRangeMin"/>
+
+    <Button android:id="@+id/btnCreateGoal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Create goal"
+        android:layout_alignParentBottom="true"/>
+</RelativeLayout>
