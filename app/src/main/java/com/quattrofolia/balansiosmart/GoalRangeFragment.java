@@ -115,7 +115,7 @@ public class GoalRangeFragment extends Fragment {
             public void onClick(View v) {
                 //Move to the next fragment
 
-                // Create fragment and give it an argument specifying the article it should show
+                // Create fragment and pass the selected values as arguments to the next fragment
                 GoalNotificationFragment newFragment = GoalNotificationFragment.newInstance(goalType, measurementAmount, timeframe, minSelectedValue, maxSelectedValue);
                 FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
                 transaction.setCustomAnimations(R.anim.enter, R.anim.exit);
@@ -134,12 +134,16 @@ public class GoalRangeFragment extends Fragment {
 
     //Methods for initializing the fragment for different goal types.
     public void weightMode(){
+        int defaultmin = userWeight-5;
+        int defaultmax = userWeight+5;
+        minSelectedValue = defaultmin;
+        maxSelectedValue = defaultmax;
         npMin.setMinValue(userWeight-10);
         npMin.setMaxValue(userWeight);
-        npMin.setValue(userWeight-5);
+        npMin.setValue(defaultmin);
         npMax.setMinValue(userWeight);
         npMax.setMaxValue(userWeight+10);
-        npMax.setValue(userWeight+5);
+        npMax.setValue(defaultmax);
         Log.d(TAG, "weightMode: called");
     }
 }

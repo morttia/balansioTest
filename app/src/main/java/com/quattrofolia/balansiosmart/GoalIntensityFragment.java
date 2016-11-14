@@ -33,13 +33,12 @@ public class GoalIntensityFragment extends Fragment {
     private NumberPicker npTimeframe;
     private NumberPicker npAmount;
     private final String[] values = {"day","week", "month"};
-    private static final String ARG_PARAM1 = "txt";
     private String goalType;
 
-    public static GoalIntensityFragment newInstance(String itemName) {
+    public static GoalIntensityFragment newInstance(String goalType) {
         GoalIntensityFragment fragment = new GoalIntensityFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, itemName);
+        args.putString("goalType", goalType);
         fragment.setArguments(args);
         return fragment;
     }
@@ -57,7 +56,7 @@ public class GoalIntensityFragment extends Fragment {
 
         //get data from the previous fragment
         if (getArguments() != null) {
-            goalType = getArguments().getString(ARG_PARAM1);
+            goalType = getArguments().getString("goalType");
         } else {
             Log.d(TAG, "onCreate: arguments null");
         }
@@ -93,7 +92,7 @@ public class GoalIntensityFragment extends Fragment {
             }
         });
 
-        //Set a value change listener for time NumberPicker
+        //Set a value change listener for time frame NumberPicker
         npTimeframe.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
             @Override
             public void onValueChange(NumberPicker picker, int oldVal, int newVal){
@@ -120,7 +119,7 @@ public class GoalIntensityFragment extends Fragment {
 
                 //Move to the next fragment
                 if (goalType.equals("Sleep") || goalType.equals("Exercise")) {
-                    // Create fragment and give it an argument specifying the article it should show
+                    // Create fragment and pass the selected values as arguments to the next fragment
                     Log.d(TAG, "onClick: about to create a fragment, goalType: " + goalType + " selected amount: " + selectedAmount + " selected timeframe: " + selectedTimeframe);
                     GoalNotificationFragment newFragment = GoalNotificationFragment.newInstance(goalType, selectedAmount, selectedTimeframe, 0, 0);
                     FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();

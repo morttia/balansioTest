@@ -9,6 +9,7 @@ public enum HealthDataType {
     BLOOD_GLUCOSE(Unit.MMOL_PER_L),
     WEIGHT(Unit.KG);
 
+
     private final Unit unit;
 
     HealthDataType(final Unit unit) {
