@@ -10,7 +10,9 @@ import com.quattrofolia.balansiosmart.models.User;
 import io.realm.Realm;
 import io.realm.RealmList;
 
-public class MainActivity extends FragmentActivity{
+
+
+public class GoalComposerActivity extends FragmentActivity{
     private User user;
 
     @Override
@@ -25,7 +27,7 @@ public class MainActivity extends FragmentActivity{
         // the fragment_container FrameLayout
         if (findViewById(R.id.fragment_container) != null) {
 
-            // However, if we're being restored from a previous state,
+            // If we're being restored from a previous state,
             // then we don't need to do anything and should return or else
             // we could end up with overlapping fragments.
             if (savedInstanceState != null) {

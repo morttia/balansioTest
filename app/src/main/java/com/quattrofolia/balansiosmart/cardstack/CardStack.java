@@ -18,6 +18,7 @@ import com.quattrofolia.balansiosmart.R;
 
 import java.util.ArrayList;
 
+//Part of ProgressView's CardView
 
 public class CardStack extends RelativeLayout {
 

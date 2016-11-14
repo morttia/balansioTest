@@ -23,6 +23,7 @@ import static com.quattrofolia.balansiosmart.cardstack.CardUtils.moveFrom;
 import static com.quattrofolia.balansiosmart.cardstack.CardUtils.scale;
 import static com.quattrofolia.balansiosmart.cardstack.CardUtils.scaleFrom;
 
+//Part of ProgressView's CardView
 
 public class CardAnimator{
     private static final String DEBUG_TAG = "CardAnimator";

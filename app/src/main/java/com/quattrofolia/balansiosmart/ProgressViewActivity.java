@@ -1,7 +1,6 @@
 package com.quattrofolia.balansiosmart;
 
 import android.app.Activity;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -26,7 +25,7 @@ public class ProgressViewActivity extends Activity {
         {
             public void onClick(View v)
             {
-                Intent i = new Intent(ProgressViewActivity.this, MainActivity.class);
+                Intent i = new Intent(ProgressViewActivity.this, GoalComposerActivity.class);
                 startActivity(i);
             }
         });

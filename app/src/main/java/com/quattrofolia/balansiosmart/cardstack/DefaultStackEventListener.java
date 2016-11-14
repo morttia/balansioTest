@@ -1,5 +1,7 @@
 package com.quattrofolia.balansiosmart.cardstack;
 
+//Part of ProgressView's CardView
+
 public class DefaultStackEventListener implements CardStack.CardEventListener {
 
     private float mThreshold;

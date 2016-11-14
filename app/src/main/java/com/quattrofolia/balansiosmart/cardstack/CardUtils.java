@@ -4,6 +4,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.RelativeLayout.LayoutParams;
+//Part of ProgressView's CardView
 
 public class CardUtils {
     final static int DIRECTION_TOP_LEFT = 0;

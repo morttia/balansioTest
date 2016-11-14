@@ -18,6 +18,7 @@ import static android.content.ContentValues.TAG;
  * Created by eemeliheinonen on 27/10/2016.
  */
 
+// Fragment class for selcting goal's intensity
 public class GoalIntensityFragment extends Fragment {
     private int amountMin;
     private int amountMax;

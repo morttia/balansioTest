@@ -18,6 +18,9 @@ import static android.content.ContentValues.TAG;
  * Created by eemeliheinonen on 27/10/2016.
  */
 
+// Fragment class for selcting goal's range
+
+
 public class GoalRangeFragment extends Fragment {
     private NumberPicker npMin;
     private NumberPicker npMax;
