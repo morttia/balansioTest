@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.RelativeLayout;
-import android.widget.RadioButton;
 import android.widget.TextView;
 
 import static android.content.ContentValues.TAG;
@@ -21,9 +20,6 @@ import static android.content.ContentValues.TAG;
 
 public class GoalNotificationFragment extends Fragment {
 
-    private RadioButton beforehand;
-    private RadioButton ontime;
-    private RadioButton late;
     private String goalType;
     private int measurementAmount;
     private String timeframe;
@@ -77,7 +73,7 @@ public class GoalNotificationFragment extends Fragment {
             public void onClick(View v) {
                 //Move to the next fragment
 
-                // Create fragment and give it an argument specifying the article it should show
+                // Create fragment and pass the selected values as arguments to the next fragment
                 GoalOverviewFragment newFragment = GoalOverviewFragment.newInstance(goalType, measurementAmount, timeframe, idealRangeMin, idealRangeMax, cbBefore.isChecked(), cbOnTime.isChecked(), cbForgot.isChecked());
                 FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
                 transaction.setCustomAnimations(R.anim.enter, R.anim.exit);

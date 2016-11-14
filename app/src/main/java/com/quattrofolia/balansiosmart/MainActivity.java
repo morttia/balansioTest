@@ -2,17 +2,24 @@ package com.quattrofolia.balansiosmart;
 
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.util.Log;
+
+import com.quattrofolia.balansiosmart.models.Goal;
+import com.quattrofolia.balansiosmart.models.User;
 
 import io.realm.Realm;
+import io.realm.RealmList;
 
 public class MainActivity extends FragmentActivity{
-
+    private User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Realm.init(this); // Initialize Realm only once when the app starts.
         setContentView(R.layout.activity_main);
+        user = new User();
+        user.goals = new RealmList<>();
 
         // Check that the activity is using the layout version with
         // the fragment_container FrameLayout
@@ -36,5 +43,11 @@ public class MainActivity extends FragmentActivity{
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.fragment_container, typeFragment).commit();
         }
+    }
+
+    public void addGoal(Goal g){
+        Log.d("jes", "addGoal: ");
+        user.goals.add(g);
+        Log.d("jes", "addGoal: Frequency: "+g.getDiscipline().getFrequency());
     }
 }

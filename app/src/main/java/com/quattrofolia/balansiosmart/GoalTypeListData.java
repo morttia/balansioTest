@@ -7,6 +7,8 @@ import java.util.List;
  * Created by mrbeva on 10/30/16.
  */
 
+// Class for handling the data that will be shown in the recyclerView of the GoalTypeFragment
+
 public class GoalTypeListData {
 
     private static final String[] headers = {"Blood Glucose", "Blood Pressure", "Weight", "Exercise", "Sleep", "Nutrition", "Heart Rate"};

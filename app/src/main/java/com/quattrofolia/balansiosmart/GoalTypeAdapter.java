@@ -36,6 +36,7 @@ public class GoalTypeAdapter extends RecyclerView.Adapter<GoalTypeAdapter.ListDa
         return new ListDataHolder(view);
     }
 
+    //populate the list of GoalTypeListItems
     @Override
     public void onBindViewHolder(ListDataHolder holder, int position) {
         GoalTypeListItem item = listData.get(position);
@@ -57,8 +58,8 @@ public class GoalTypeAdapter extends RecyclerView.Adapter<GoalTypeAdapter.ListDa
 
                 //Pass the selected item from this adapter to the GoalTypeFragment class
                 public void onClick(View v) {
-                    // Perform action on click
-                    Log.d(TAG, "button onClick: ");
+
+                    //Call the recyclerViewClickListener interfaces method to know which list item was clicked.
                     Log.d(TAG, "onClick: "+header.getText());
                     itemListener.recyclerViewListClicked(itemView, getLayoutPosition(), header.getText().toString());
                 }
