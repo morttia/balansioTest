@@ -21,9 +21,12 @@ public class Storage {
 
     protected void save(final RealmObject object) {
         realm.executeTransactionAsync(new Realm.Transaction() {
+
+            // Use this method for persisting RealmObjects
             @Override
             public void execute(Realm bgRealm) {
                 if (object instanceof AutoIncrementable) {
+                    // Auto increment primary key for autoincrementable RealmObjects
                     AutoIncrementable autoIncrementable = (AutoIncrementable) object;
                     autoIncrementable.setPrimaryKey(autoIncrementable.getNextPrimaryKey(bgRealm));
                     bgRealm.copyToRealm((RealmObject) autoIncrementable);
