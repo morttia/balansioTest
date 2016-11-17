@@ -52,4 +52,8 @@ public class GoalComposerActivity extends FragmentActivity{
         user.goals.add(g);
         Log.d("jes", "addGoal: Frequency: "+g.getDiscipline().getFrequency());
     }
+
+    public void addDefaultGoals(){
+
+    }
 }
