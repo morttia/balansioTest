@@ -113,12 +113,22 @@ public class GoalIntensityFragment extends Fragment {
         } else if (goalType.equals("Exercise")) {
             exerciseMode();
         }
-        
 
-        //handle the swiping to the next fragment by clicking on the button
+        btnSkip.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                GoalRangeFragment newFragment = GoalRangeFragment.newInstance(goalType, 0, "none");
+                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                transaction.setCustomAnimations(R.anim.enter, R.anim.exit);
+                transaction.replace(R.id.fragment_container, newFragment);
+                transaction.addToBackStack(null);
+                transaction.commit();
+            }
+        });
+
         btnNext.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
+        //handle the swiping to the next fragment by clicking on the button
                 //Move to the next fragment
                 if (goalType.equals("Exercise")) {
                     // Create fragment and pass the selected values as arguments to the next fragment

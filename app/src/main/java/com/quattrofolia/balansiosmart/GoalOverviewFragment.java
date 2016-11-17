@@ -52,7 +52,7 @@ public class GoalOverviewFragment extends Fragment {
         GoalOverviewFragment fragment = new GoalOverviewFragment();
         Bundle args = new Bundle();
         args.putString("goalType", GoalType);
-        args.putInt("amount", frequency);
+        args.putInt("frequency", frequency);
         args.putString("monitoringPeriod", monitoringPeriod);
         args.putInt("rangeMin", idealRangeMin);
         args.putInt("rangeMax", idealRangeMax);
@@ -68,7 +68,7 @@ public class GoalOverviewFragment extends Fragment {
         //get data from the previous fragments
         if (getArguments() != null) {
             goalType = getArguments().getString("goalType");
-            frequency = getArguments().getInt("amount");
+            frequency = getArguments().getInt("frequency");
             monitoringPeriod = getArguments().getString("monitoringPeriod");
             idealRangeMin = getArguments().getInt("rangeMin");
             idealRangeMax = getArguments().getInt("rangeMax");
