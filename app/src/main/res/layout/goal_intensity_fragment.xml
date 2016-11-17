@@ -44,4 +44,12 @@
         android:layout_alignParentBottom="true"
         android:textSize="20sp"/>
 
+    <Button
+        android:id="@+id/btnIntensitySkip"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Skip"
+        android:layout_above="@id/btnIntensityNext"
+        android:textSize="20sp"/>
+
 </RelativeLayout>
