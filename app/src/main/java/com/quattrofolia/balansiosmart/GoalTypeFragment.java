@@ -18,7 +18,7 @@ import static android.content.ContentValues.TAG;
  * Created by eemeliheinonen on 27/10/2016.
  */
 
-// Fragment for selecting the goal data type.
+// Fragment for selecting the progress_view_goal_item data type.
 
 public class GoalTypeFragment extends Fragment implements RecyclerViewClickListener {
     private RecyclerView recyclerView;

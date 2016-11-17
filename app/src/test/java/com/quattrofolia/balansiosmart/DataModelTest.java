@@ -118,7 +118,7 @@ public class DataModelTest {
         user.goals.add(weightGoal);
 
         /*Following iterator checks the current progress status
-        * on each goal with previously generated mock values. */
+        * on each progress_view_goal_item with previously generated mock values. */
         for (Goal goal : user.goals) {
 
             Discipline discipline = goal.getDiscipline();

@@ -6,7 +6,7 @@ import org.joda.time.Interval;
 
 /* This enumeration defines the supported monitoring periods.
 * Monitoring periods are used by Discipline objects for
-* evaluating goal accomplishments.
+* evaluating progress_view_goal_item accomplishments.
 *
 * Each value is assigned with a function that returns a Joda
 * Interval object.  */
