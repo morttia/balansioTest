@@ -36,7 +36,8 @@ public class GoalRangeFragment extends Fragment {
     private String goalType;
     private int frequency;
     private String monitoringPeriod;
-    private Button btn;
+    private Button btnNext;
+    private Button btnSkip;
     private TextView tvRangeMin;
     private TextView tvRangeMax;
 
@@ -83,7 +84,8 @@ public class GoalRangeFragment extends Fragment {
         tvRangeMax = (TextView) myView.findViewById(R.id.textViewGoalRangeMax);
         npMin = (NumberPicker) myView.findViewById(R.id.numberPicker_min);
         npMax = (NumberPicker) myView.findViewById(R.id.numberPicker_max);
-        btn = (Button) myView.findViewById(R.id.btnRangeNext);
+        btnNext = (Button) myView.findViewById(R.id.btnRangeNext);
+        btnSkip = (Button) myView.findViewById(R.id.btnRangeSkip);
         //tv.setText("Select the ideal range minimum value");
 
         // Initialize the pickers
@@ -123,8 +125,21 @@ public class GoalRangeFragment extends Fragment {
             }
         });
 
+        btnSkip.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                //Move to the next fragment
+
+                GoalNotificationFragment newFragment = GoalNotificationFragment.newInstance(goalType, frequency, monitoringPeriod, 0, 0);
+                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                transaction.setCustomAnimations(R.anim.enter, R.anim.exit);
+                transaction.replace(R.id.fragment_container, newFragment);
+                transaction.addToBackStack(null);
+                transaction.commit();
+            }
+        });
+
         //handle the swiping to the next fragment by clicking on the button
-        btn.setOnClickListener(new View.OnClickListener() {
+        btnNext.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 //Move to the next fragment
 

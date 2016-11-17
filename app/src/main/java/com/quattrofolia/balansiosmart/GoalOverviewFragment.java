@@ -1,15 +1,12 @@
 package com.quattrofolia.balansiosmart;
 
-import android.animation.ObjectAnimator;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.DecelerateInterpolator;
 import android.widget.Button;
-import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -74,9 +71,13 @@ public class GoalOverviewFragment extends Fragment {
             idealRangeMax = getArguments().getInt("rangeMax");
             notficationStyle = getArguments().getString("notificationStyle");
 
-            discipline = new Discipline();
-            range = new Range();
             goal = new Goal();
+            if(frequency!=0) {
+                discipline = new Discipline();
+            }
+            if (idealRangeMax!=0){
+                range = new Range();
+            }
 
             Log.d(TAG, "onCreate: goaltype: "+goalType);
             Log.d(TAG, "onCreate: measurement frequency: "+frequency);
@@ -88,32 +89,36 @@ public class GoalOverviewFragment extends Fragment {
             Log.d(TAG, "onCreate: arguments null");
         }
 
-        discipline.setFrequency(frequency);
-        if (monitoringPeriod.equals("day")){
-            discipline.setMonitoringPeriod(day);
-            Log.d(TAG, "onCreate: discipline getMonitoringPeriod: "+discipline.getMonitoringPeriod().toString());
+        if (discipline!=null) {
+            discipline.setFrequency(frequency);
+            if (monitoringPeriod.equals("day")) {
+                discipline.setMonitoringPeriod(day);
+                Log.d(TAG, "onCreate: discipline getMonitoringPeriod: " + discipline.getMonitoringPeriod().toString());
 
-        } else if (monitoringPeriod.equals("week")) {
-            discipline.setMonitoringPeriod(week);
-            Log.d(TAG, "onCreate: discipline getMonitoringPeriod: "+discipline.getMonitoringPeriod().toString());
+            } else if (monitoringPeriod.equals("week")) {
+                discipline.setMonitoringPeriod(week);
+                Log.d(TAG, "onCreate: discipline getMonitoringPeriod: " + discipline.getMonitoringPeriod().toString());
 
-        } else {
-            discipline.setMonitoringPeriod(month);
-            Log.d(TAG, "onCreate: discipline getMonitoringPeriod: "+discipline.getMonitoringPeriod().toString());
-
+            } else {
+                discipline.setMonitoringPeriod(month);
+                Log.d(TAG, "onCreate: discipline getMonitoringPeriod: " + discipline.getMonitoringPeriod().toString());
+            }
+            goal.setDiscipline(discipline);
         }
-        range.setLow(new BigDecimal(idealRangeMin));
-        Log.d(TAG, "onCreate:range getLow:  "+range.getLow());
 
-        range.setHigh(new BigDecimal(idealRangeMax));
-        Log.d(TAG, "onCreate: range getHigh: "+range.getHigh());
+        if (range!=null) {
+            range.setLow(new BigDecimal(idealRangeMin));
+            Log.d(TAG, "onCreate:range getLow:  " + range.getLow());
 
-        if (goalType.equals("Weight")){
-            goal.setType(WEIGHT);
-            Log.d(TAG, "onCreate: Goal print"+goal.toString());
+            range.setHigh(new BigDecimal(idealRangeMax));
+            Log.d(TAG, "onCreate: range getHigh: " + range.getHigh());
+
+            if (goalType.equals("Weight")) {
+                goal.setType(WEIGHT);
+                Log.d(TAG, "onCreate: Goal print" + goal.toString());
+            }
+            goal.setTargetRange(range);
         }
-        goal.setDiscipline(discipline);
-        goal.setTargetRange(range);
     }
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
