@@ -18,7 +18,7 @@ import static android.content.ContentValues.TAG;
  * Created by eemeliheinonen on 27/10/2016.
  */
 
-// Fragment class for selcting goal's range
+// Fragment class for selcting goals range
 
 
 public class GoalRangeFragment extends Fragment {
@@ -34,17 +34,19 @@ public class GoalRangeFragment extends Fragment {
     private int maxSelectedValue;
     private int userWeight;
     private String goalType;
-    private int measurementAmount;
-    private String timeframe;
+    private int frequency;
+    private String monitoringPeriod;
     private Button btn;
+    private TextView tvRangeMin;
+    private TextView tvRangeMax;
 
 
-    public static GoalRangeFragment newInstance(String goalType, int measurementAmount, String timeframe) {
+    public static GoalRangeFragment newInstance(String goalType, int frequency, String monitoringPeriod) {
         GoalRangeFragment fragment = new GoalRangeFragment();
         Bundle args = new Bundle();
         args.putString("goalType", goalType);
-        args.putInt("intAmount", measurementAmount);
-        args.putString("timeframe", timeframe);
+        args.putInt("frequency", frequency);
+        args.putString("monitoringPeriod", monitoringPeriod);
         fragment.setArguments(args);
         return fragment;
     }
@@ -64,11 +66,11 @@ public class GoalRangeFragment extends Fragment {
         //get data from the previous fragments
         if (getArguments() != null) {
             goalType = getArguments().getString("goalType");
-            measurementAmount = getArguments().getInt("intAmount");
-            timeframe = getArguments().getString("timeframe");
+            frequency = getArguments().getInt("frequency");
+            monitoringPeriod = getArguments().getString("monitoringPeriod");
             Log.d(TAG, "onCreate: goalType is "+goalType);
-            Log.d(TAG, "onCreate: measurementAmount is "+measurementAmount);
-            Log.d(TAG, "onCreate: timeframe is "+timeframe);
+            Log.d(TAG, "onCreate: frequency is "+frequency);
+            Log.d(TAG, "onCreate: monitoringPeriod is "+monitoringPeriod);
         } else {
             Log.d(TAG, "onCreate: arguments null");
         }
@@ -77,7 +79,8 @@ public class GoalRangeFragment extends Fragment {
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         RelativeLayout myView =(RelativeLayout) inflater.inflate(R.layout.goal_range_fragment, container, false);
-        TextView tv = (TextView) myView.findViewById(R.id.textViewGoalRangeMin);
+        tvRangeMin = (TextView) myView.findViewById(R.id.textViewGoalRangeMin);
+        tvRangeMax = (TextView) myView.findViewById(R.id.textViewGoalRangeMax);
         npMin = (NumberPicker) myView.findViewById(R.id.numberPicker_min);
         npMax = (NumberPicker) myView.findViewById(R.id.numberPicker_max);
         btn = (Button) myView.findViewById(R.id.btnRangeNext);
@@ -94,6 +97,8 @@ public class GoalRangeFragment extends Fragment {
         //check if a certain goal type has been selected & modify the fragment accordingly
         if (goalType.equals("Weight")) {
             weightMode();
+        } else if(goalType.equals("Sleep")) {
+            sleepMode();
         }
 
         npMin.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
@@ -101,7 +106,12 @@ public class GoalRangeFragment extends Fragment {
             public void onValueChange(NumberPicker picker, int oldVal, int newVal){
                 //Display the newly selected number from picker
                 Log.d(TAG, "onValueChange: min: "+newVal);
-                minSelectedValue = newVal;
+                if (goalType.equals("Sleep")){
+                    minSelectedValue = newVal;
+                    maxSelectedValue = newVal;
+                } else {
+                    minSelectedValue = newVal;
+                }
             }
         });
 
@@ -119,7 +129,7 @@ public class GoalRangeFragment extends Fragment {
                 //Move to the next fragment
 
                 // Create fragment and pass the selected values as arguments to the next fragment
-                GoalNotificationFragment newFragment = GoalNotificationFragment.newInstance(goalType, measurementAmount, timeframe, minSelectedValue, maxSelectedValue);
+                GoalNotificationFragment newFragment = GoalNotificationFragment.newInstance(goalType, frequency, monitoringPeriod, minSelectedValue, maxSelectedValue);
                 FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
                 transaction.setCustomAnimations(R.anim.enter, R.anim.exit);
 
@@ -148,5 +158,16 @@ public class GoalRangeFragment extends Fragment {
         npMax.setMaxValue(userWeight+10);
         npMax.setValue(defaultmax);
         Log.d(TAG, "weightMode: called");
+    }
+
+    public void sleepMode(){
+        npMin.setMinValue(4);
+        npMin.setMaxValue(9);
+        npMin.setValue(8);
+        npMin.setWrapSelectorWheel(false);
+        npMax.setVisibility(View.GONE);
+        tvRangeMax.setVisibility(View.GONE);
+        tvRangeMin.setText("How many hours should you try to sleep a night?");
+        //npMin.setPaddingRelative(0,300,0,0);
     }
 }

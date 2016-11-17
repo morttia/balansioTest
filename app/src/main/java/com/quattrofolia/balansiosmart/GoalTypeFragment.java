@@ -42,17 +42,34 @@ public class GoalTypeFragment extends Fragment implements RecyclerViewClickListe
     public void recyclerViewListClicked(View v, int position, String itemName){
         Log.d(TAG, "recyclerViewListClicked: "+ position+ " "+ itemName);
 
-        // Create fragment and give the fragment change transaction an animation
-        GoalIntensityFragment newFragment = GoalIntensityFragment.newInstance(itemName);
-        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-        transaction.setCustomAnimations(R.anim.enter, R.anim.exit);
+        if (itemName.equals("Sleep")) {
+            // Create fragment and pass the selected values as arguments to the next fragment
+            Log.d(TAG, "onClick: about to create a fragment, goalType: " + itemName + " selected amount: " + 1 + " selected timeframe: " + "day");
+            GoalRangeFragment newFragment = GoalRangeFragment.newInstance(itemName, 1, "day");
+            FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+            transaction.setCustomAnimations(R.anim.enter, R.anim.exit);
 
-        // Replace whatever is in the fragment_container view with this fragment,
-        // and add the transaction to the back stack so the user can navigate back
-        transaction.replace(R.id.fragment_container, newFragment);
-        transaction.addToBackStack(null);
+            // Replace whatever is in the fragment_container view with this fragment,
+            // and add the transaction to the back stack so the user can navigate back
+            transaction.replace(R.id.fragment_container, newFragment);
+            transaction.addToBackStack(null);
 
-        // Commit the transaction
-        transaction.commit();
+            // Commit the transaction
+            transaction.commit();
+        } else {
+
+            // Create fragment and give the fragment change transaction an animation
+            GoalIntensityFragment newFragment = GoalIntensityFragment.newInstance(itemName);
+            FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+            transaction.setCustomAnimations(R.anim.enter, R.anim.exit);
+
+            // Replace whatever is in the fragment_container view with this fragment,
+            // and add the transaction to the back stack so the user can navigate back
+            transaction.replace(R.id.fragment_container, newFragment);
+            transaction.addToBackStack(null);
+
+            // Commit the transaction
+            transaction.commit();
+        }
     }
 }
