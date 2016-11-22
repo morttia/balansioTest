@@ -31,7 +31,7 @@ import static com.quattrofolia.balansiosmart.models.MonitoringPeriod.week;
  */
 
 
-// Fragment class for showing the created goal and adding it to model
+// Fragment class for showing the created progress_view_goal_item_row and adding it to model
 
 public class GoalOverviewFragment extends Fragment {
 
@@ -133,7 +133,7 @@ public class GoalOverviewFragment extends Fragment {
 
         btnCreateGoal.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                //Add the newly created goal object to the users list of goals
+                //Add the newly created progress_view_goal_item_row object to the users list of goals
                 ((GoalComposerActivity) getActivity()).addGoal(goal);
             }
         });

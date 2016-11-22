@@ -18,8 +18,7 @@ import static android.content.ContentValues.TAG;
  * Created by eemeliheinonen on 27/10/2016.
  */
 
-// Fragment class for selcting goals range
-
+// Fragment class for selcting progress_view_goal_item_row's range
 
 public class GoalRangeFragment extends Fragment {
     private NumberPicker npMin;
@@ -94,7 +93,7 @@ public class GoalRangeFragment extends Fragment {
         npMax.setMinValue(maxRangeMin);
         npMax.setValue(maxRangeDefault);
 
-        //check if a certain goal type has been selected & modify the fragment accordingly
+        //check if a certain progress_view_goal_item_row type has been selected & modify the fragment accordingly
         if (goalType.equals("Weight")) {
             weightMode();
         } else if(goalType.equals("Sleep")) {
@@ -145,7 +144,7 @@ public class GoalRangeFragment extends Fragment {
         return myView;
     }
 
-    //Methods for initializing the fragment for different goal types.
+    //Methods for initializing the fragment for different progress_view_goal_item_row types.
     public void weightMode(){
         int defaultmin = userWeight-5;
         int defaultmax = userWeight+5;
