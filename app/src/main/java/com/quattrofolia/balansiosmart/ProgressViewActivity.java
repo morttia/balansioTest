@@ -10,6 +10,12 @@ import android.view.View;
 import android.widget.Button;
 
 import com.quattrofolia.balansiosmart.cardstack.CardStack;
+import com.quattrofolia.balansiosmart.models.Goal;
+
+import java.util.ArrayList;
+
+import static com.quattrofolia.balansiosmart.models.HealthDataType.BLOOD_GLUCOSE;
+import static com.quattrofolia.balansiosmart.models.HealthDataType.WEIGHT;
 
 
 public class ProgressViewActivity extends Activity {
@@ -24,7 +30,8 @@ public class ProgressViewActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_progress_view);
-        goalRecyclerView = (RecyclerView) findViewById(R.id.goal_recycler_view);
+
+        goalRecyclerView = (RecyclerView) findViewById(R.id.goalRecyclerView);
         goalRecyclerView.setHasFixedSize(false);
         goalLayoutManager = new LinearLayoutManager(this) {
             @Override
@@ -32,11 +39,27 @@ public class ProgressViewActivity extends Activity {
                 return false;
             }
         };
+
         goalRecyclerView.setLayoutManager(goalLayoutManager);
-        String[] goalDataset = {"one", "two", "three", "four",
+        // Old dataset
+        /* String[] goalDataset = {"one", "two", "three", "four",
                 "five", "six", "seven", "eight", "nine", "ten"
         };
-        goalAdapter = new GoalAdapter(goalDataset);
+        */
+        // New dataset
+        Goal goal1 = new Goal();
+        goal1.setType(BLOOD_GLUCOSE);
+        Goal goal2 = new Goal();
+        goal2.setType(WEIGHT);
+        ArrayList<Goal> goals = new ArrayList<>();
+        goals.add(goal1);
+        goals.add(goal2);
+
+        // Old adapter
+        // goalAdapter = new GoalAdapter(goalDataset);
+        // New adapter
+
+        goalAdapter = new GoalItemRecyclerAdapter(goals);
         goalRecyclerView.setAdapter(goalAdapter);
 
         createGoalButton = (Button)findViewById(R.id.create_goal_button);

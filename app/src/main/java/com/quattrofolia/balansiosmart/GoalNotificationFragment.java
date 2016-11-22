@@ -18,7 +18,7 @@ import static android.content.ContentValues.TAG;
  * Created by eemeliheinonen on 27/10/2016.
  */
 
-// Fragment class for selcting progress_view_goal_item's notification preferneces
+// Fragment class for selcting progress_view_goal_item_row's notification preferneces
 
 public class GoalNotificationFragment extends Fragment {
 
