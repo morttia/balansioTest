@@ -14,9 +14,6 @@ import com.quattrofolia.balansiosmart.models.Goal;
 
 import java.util.ArrayList;
 
-import static com.quattrofolia.balansiosmart.models.HealthDataType.BLOOD_GLUCOSE;
-import static com.quattrofolia.balansiosmart.models.HealthDataType.WEIGHT;
-
 
 public class ProgressViewActivity extends Activity {
     private CardStack mCardStack;
@@ -25,6 +22,7 @@ public class ProgressViewActivity extends Activity {
     private RecyclerView goalRecyclerView;
     private RecyclerView.Adapter goalAdapter;
     private RecyclerView.LayoutManager goalLayoutManager;
+    private ArrayList<Goal> goals;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,23 +39,6 @@ public class ProgressViewActivity extends Activity {
         };
 
         goalRecyclerView.setLayoutManager(goalLayoutManager);
-        // Old dataset
-        /* String[] goalDataset = {"one", "two", "three", "four",
-                "five", "six", "seven", "eight", "nine", "ten"
-        };
-        */
-        // New dataset
-        Goal goal1 = new Goal();
-        goal1.setType(BLOOD_GLUCOSE);
-        Goal goal2 = new Goal();
-        goal2.setType(WEIGHT);
-        ArrayList<Goal> goals = new ArrayList<>();
-        goals.add(goal1);
-        goals.add(goal2);
-
-        // Old adapter
-        // goalAdapter = new GoalAdapter(goalDataset);
-        // New adapter
 
         goalAdapter = new GoalItemRecyclerAdapter(goals);
         goalRecyclerView.setAdapter(goalAdapter);

@@ -31,9 +31,9 @@ public class GoalItemRecyclerAdapter extends RecyclerView.Adapter<GoalItemRecycl
         }
 
         public void bindGoal(ArrayList<Goal> goals, int position) {
-            String count = String.valueOf(position+1);
+            String count = String.valueOf(position + 1);
             countView.setText(count);
-            typeView.setText(goals.get(position).getType().toString());
+            typeView.setText(goals.get(position).getType().getLongName());
         }
 
         // Handle required events
@@ -61,6 +61,10 @@ public class GoalItemRecyclerAdapter extends RecyclerView.Adapter<GoalItemRecycl
 
     @Override
     public int getItemCount() {
-        return goals.size();
+        if (goals != null) {
+            return goals.size();
+        } else {
+            return 0;
+        }
     }
 }
