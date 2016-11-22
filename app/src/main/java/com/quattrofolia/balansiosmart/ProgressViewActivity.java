@@ -26,9 +26,16 @@ public class ProgressViewActivity extends Activity {
         setContentView(R.layout.activity_progress_view);
         goalRecyclerView = (RecyclerView) findViewById(R.id.goal_recycler_view);
         goalRecyclerView.setHasFixedSize(false);
-        goalLayoutManager = new LinearLayoutManager(this);
+        goalLayoutManager = new LinearLayoutManager(this) {
+            @Override
+            public boolean canScrollVertically() {
+                return false;
+            }
+        };
         goalRecyclerView.setLayoutManager(goalLayoutManager);
-        String[] goalDataset = {"one", "two", "three"};
+        String[] goalDataset = {"one", "two", "three", "four",
+                "five", "six", "seven", "eight", "nine", "ten"
+        };
         goalAdapter = new GoalAdapter(goalDataset);
         goalRecyclerView.setAdapter(goalAdapter);
 
@@ -44,7 +51,6 @@ public class ProgressViewActivity extends Activity {
         });
 
         mCardStack = (CardStack)findViewById(R.id.container);
-
         mCardStack.setContentResource(R.layout.card_content);
         //mCardStack.setStackMargin(20);
 
@@ -60,6 +66,7 @@ public class ProgressViewActivity extends Activity {
         if(mCardStack.getAdapter() != null) {
             Log.i("MyActivity", "Card Stack size: " + mCardStack.getAdapter().getCount());
         }
+        mCardStack.bringToFront();
     }
 
 }

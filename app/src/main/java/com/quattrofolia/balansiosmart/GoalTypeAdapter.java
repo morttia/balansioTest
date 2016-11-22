@@ -27,7 +27,6 @@ public class GoalTypeAdapter extends RecyclerView.Adapter<GoalTypeAdapter.ListDa
         this.inflater = LayoutInflater.from(context);
         this.listData= listData;
         this.itemListener = itemListener;
-
     }
 
     @Override

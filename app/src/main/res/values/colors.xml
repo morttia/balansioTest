@@ -3,4 +3,10 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+
+    <!-- test colors -->
+    <color name="testRed">#c62828</color>
+    <color name="testGreen">#66bb6a</color>
+    <color name="testYellow">#fdd835</color>
+    <color name="testBlue">#1e88e5</color>
 </resources>

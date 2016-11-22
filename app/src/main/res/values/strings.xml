@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Balansio Smart</string>
+    <string name="button_text_create_goal">Create Goal</string>
 </resources>
