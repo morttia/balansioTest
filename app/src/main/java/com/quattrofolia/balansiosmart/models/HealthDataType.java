@@ -7,7 +7,14 @@ package com.quattrofolia.balansiosmart.models;
 public enum HealthDataType {
 
     BLOOD_GLUCOSE(Unit.MMOL_PER_L),
-    WEIGHT(Unit.KG);
+    WEIGHT(Unit.KG),
+    SLEEP(Unit.HOUR),
+    HYPOS(Unit.INSTANCE),
+    MEDICATION_BOLUS(Unit.INSTANCE),
+    MEDICATION_BASAL(Unit.INSTANCE),
+    A1C(Unit.PERCENTAGE),
+    EXERCISE(Unit.HOUR),
+    BLOOD_PRESSURE_SYSTOLIC(Unit.MMHG);
 
 
     private final Unit unit;
