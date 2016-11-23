@@ -20,52 +20,30 @@
         android:textSize="20sp"
         android:layout_below="@id/tvNotificationIntro"
         android:paddingBottom="25dp"/>
-    <!--
-        <RadioGroup
+
+        <RadioGroup android:id="@+id/radioGroup"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tvNotificationRemind">
 
                 <RadioButton
-                    android:text="Beforehand "
+                    android:text="Strict"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/radioButton" />
+                    android:id="@+id/rbStrict" />
 
                 <RadioButton
-                    android:text="On time"
+                    android:text="Easy"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/radioButton2" />
+                    android:id="@+id/rbEasy" />
 
                 <RadioButton
-                    android:text="If I forgot"
+                    android:text="None"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/radioButton3" />
-
+                    android:id="@+id/rbNone" />
         </RadioGroup>
-        -->
-
-    <CheckBox android:id="@+id/cbBefore"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Beforehand"
-        android:layout_below="@id/tvNotificationRemind"
-        android:textSize="25sp" />
-
-    <CheckBox android:id="@+id/cbOnTime"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="On time"
-        android:layout_below="@id/cbBefore"
-        android:textSize="25sp" />
-
-    <CheckBox android:id="@+id/cbForgot"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="If I forgot"
-        android:layout_below="@id/cbOnTime"
-        android:textSize="25sp" />
 
     <Button
         android:text=">"

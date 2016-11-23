@@ -3,6 +3,7 @@ package com.quattrofolia.balansiosmart.animation;
 import android.animation.Animator;
 import android.animation.Animator.AnimatorListener;
 
+//Part of ProgressView's CardView
 public abstract class AnimatorListenerAdapter implements AnimatorListener {
     @Override
     public void onAnimationCancel(Animator arg0) {

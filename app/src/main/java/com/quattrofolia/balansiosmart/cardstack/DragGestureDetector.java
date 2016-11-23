@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 
+//Part of ProgressView's CardView
 
 //detect both tap and drag
 public class DragGestureDetector {

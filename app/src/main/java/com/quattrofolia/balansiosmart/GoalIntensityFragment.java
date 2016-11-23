@@ -18,46 +18,47 @@ import static android.content.ContentValues.TAG;
  * Created by eemeliheinonen on 27/10/2016.
  */
 
+// Fragment class for selcting progress_view_goal_item_row's intensity
 public class GoalIntensityFragment extends Fragment {
-    private int amountMin;
-    private int amountMax;
-    private int timeMin;
-    private int timeMax;
-    private int amountDefault;
-    private int timeDefault;
-    private TextView tvMeasurementNumber;
-    private TextView tvTimeframe;
-    private Button btn;
-    private int selectedAmount;
-    private String selectedTimeframe;
-    private NumberPicker npTimeframe;
-    private NumberPicker npAmount;
+    private int frequencyMin;
+    private int frequencyMax;
+    private int periodMin;
+    private int periodMax;
+    private int frequencyDefault;
+    private int periodDefault;
+    private TextView tvFrequency;
+    private TextView tvMonitoringPeriod;
+    private Button btnNext;
+    private Button btnSkip;
+    private int selectedFrequency;
+    private String selectedMonitoringPeriod;
+    private NumberPicker npMonitoringPeriod;
+    private NumberPicker npFrequency;
     private final String[] values = {"day","week", "month"};
-    private static final String ARG_PARAM1 = "txt";
     private String goalType;
 
-    public static GoalIntensityFragment newInstance(String itemName) {
+    public static GoalIntensityFragment newInstance(String goalType) {
         GoalIntensityFragment fragment = new GoalIntensityFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, itemName);
+        args.putString("goalType", goalType);
         fragment.setArguments(args);
         return fragment;
     }
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        amountMin = 1;
-        amountMax = 10;
-        amountDefault = 5;
-        timeMin = 0;
-        timeMax = values.length-1;
-        timeDefault = 0;
-        selectedAmount = amountDefault;
-        selectedTimeframe = values[0];
+        frequencyMin = 1;
+        frequencyMax = 10;
+        frequencyDefault = 5;
+        periodMin = 0;
+        periodMax = values.length-1;
+        periodDefault = 0;
+        selectedFrequency = frequencyDefault;
+        selectedMonitoringPeriod = values[0];
 
         //get data from the previous fragment
         if (getArguments() != null) {
-            goalType = getArguments().getString(ARG_PARAM1);
+            goalType = getArguments().getString("goalType");
         } else {
             Log.d(TAG, "onCreate: arguments null");
         }
@@ -66,63 +67,73 @@ public class GoalIntensityFragment extends Fragment {
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         RelativeLayout myView =(RelativeLayout) inflater.inflate(R.layout.goal_intensity_fragment, container, false);
-        tvMeasurementNumber = (TextView) myView.findViewById(R.id.textViewGoalIntensity);
-        tvTimeframe = (TextView) myView.findViewById(R.id.textViewGoalIntensityDesc);
-        btn = (Button) myView.findViewById(R.id.btnIntensityNext);
-        npAmount = (NumberPicker) myView.findViewById(R.id.npGoalIntensityAmount);
-        npTimeframe = (NumberPicker) myView.findViewById(R.id.npGoalIntensityTime);
-        tvMeasurementNumber.setText("Number of measurements");
+        tvFrequency = (TextView) myView.findViewById(R.id.textViewGoalIntensity);
+        tvMonitoringPeriod = (TextView) myView.findViewById(R.id.textViewGoalIntensityDesc);
+        btnNext = (Button) myView.findViewById(R.id.btnIntensityNext);
+        btnSkip = (Button) myView.findViewById(R.id.btnIntensitySkip);
+        npFrequency = (NumberPicker) myView.findViewById(R.id.npGoalIntensityAmount);
+        npMonitoringPeriod = (NumberPicker) myView.findViewById(R.id.npGoalIntensityTime);
+        tvFrequency.setText("Number of measurements");
 
         //Initialize the NumberPickers
-        npAmount.setMinValue(amountMin);
-        npAmount.setMaxValue(amountMax);
-        npAmount.setValue(amountDefault);
-        npAmount.setWrapSelectorWheel(false);
-        npTimeframe.setDisplayedValues(values);
-        npTimeframe.setMinValue(timeMin);
-        npTimeframe.setMaxValue(timeMax);
-        npTimeframe.setValue(timeDefault);
+        npFrequency.setMinValue(frequencyMin);
+        npFrequency.setMaxValue(frequencyMax);
+        npFrequency.setValue(frequencyDefault);
+        npFrequency.setWrapSelectorWheel(false);
+        npMonitoringPeriod.setDisplayedValues(values);
+        npMonitoringPeriod.setMinValue(periodMin);
+        npMonitoringPeriod.setMaxValue(periodMax);
+        npMonitoringPeriod.setValue(periodDefault);
 
         //Set a value change listener for amount NumberPicker
-        npAmount.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+        npFrequency.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
             @Override
             public void onValueChange(NumberPicker picker, int oldVal, int newVal){
                 //Set the selected value to a variable
-                selectedAmount = newVal;
-                Log.d(TAG, "onValueChange: selectedAmount: "+selectedAmount);
+                selectedFrequency = newVal;
+                Log.d(TAG, "onValueChange: selectedFrequency: "+selectedFrequency);
             }
         });
 
-        //Set a value change listener for time NumberPicker
-        npTimeframe.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+        //Set a value change listener for time frame NumberPicker
+        npMonitoringPeriod.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
             @Override
             public void onValueChange(NumberPicker picker, int oldVal, int newVal){
                 //Set the selected value to a variable
-                selectedTimeframe = values[newVal];
-                Log.d(TAG, "onValueChange: selectedTimeframe: "+selectedTimeframe);
+                selectedMonitoringPeriod = values[newVal];
+                Log.d(TAG, "onValueChange: selectedMonitoringPeriod: "+selectedMonitoringPeriod);
             }
         });
 
-        //check if a certain goal type has been selected & modify the fragment accordingly
+        //check if a certain progress_view_goal_item_row type has been selected & modify the fragment accordingly
         if (goalType.equals("Weight")) {
             weightMode();
         } else if(goalType.equals("Blood Glucose")) {
             bgMode();
-        } else if (goalType.equals("Sleep")) {
-            sleepMode();
         } else if (goalType.equals("Exercise")) {
-            execriseMode();
+            exerciseMode();
         }
 
-        //handle the swiping to the next fragment by clicking on the button
-        btn.setOnClickListener(new View.OnClickListener() {
+        btnSkip.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                GoalRangeFragment newFragment = GoalRangeFragment.newInstance(goalType, 0, "none");
+                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                transaction.setCustomAnimations(R.anim.enter, R.anim.exit);
+                transaction.replace(R.id.fragment_container, newFragment);
+                transaction.addToBackStack(null);
+                transaction.commit();
+            }
+        });
+
+        btnNext.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
+        //handle the swiping to the next fragment by clicking on the button
                 //Move to the next fragment
-                if (goalType.equals("Sleep") || goalType.equals("Exercise")) {
-                    // Create fragment and give it an argument specifying the article it should show
-                    Log.d(TAG, "onClick: about to create a fragment, goalType: " + goalType + " selected amount: " + selectedAmount + " selected timeframe: " + selectedTimeframe);
-                    GoalNotificationFragment newFragment = GoalNotificationFragment.newInstance(goalType, selectedAmount, selectedTimeframe, 0, 0);
+                if (goalType.equals("Exercise")) {
+                    // Create fragment and pass the selected values as arguments to the next fragment
+                    Log.d(TAG, "onClick: about to create a fragment, goalType: " + goalType + " selected amount: " + selectedFrequency + " selected timeframe: " + selectedMonitoringPeriod);
+                    GoalNotificationFragment newFragment = GoalNotificationFragment.newInstance(goalType, selectedFrequency, selectedMonitoringPeriod, 0, 0);
                     FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
                     transaction.setCustomAnimations(R.anim.enter, R.anim.exit);
 
@@ -134,8 +145,8 @@ public class GoalIntensityFragment extends Fragment {
                     // Commit the transaction
                     transaction.commit();
                 } else {
-                    Log.d(TAG, "onClick: about to create a fragment, goalType: " + goalType + " selected amount: " + selectedAmount + " selected timeframe: " + selectedTimeframe);
-                    GoalRangeFragment newFragment = GoalRangeFragment.newInstance(goalType, selectedAmount, selectedTimeframe);
+                    Log.d(TAG, "onClick: about to create a fragment, goalType: " + goalType + " selected amount: " + selectedFrequency + " selected timeframe: " + selectedMonitoringPeriod);
+                    GoalRangeFragment newFragment = GoalRangeFragment.newInstance(goalType, selectedFrequency, selectedMonitoringPeriod);
                     FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
                     transaction.setCustomAnimations(R.anim.enter, R.anim.exit);
                     transaction.replace(R.id.fragment_container, newFragment);
@@ -147,41 +158,33 @@ public class GoalIntensityFragment extends Fragment {
         return myView;
     }
 
-    //Methods for initializing the fragment for different goal types.
+    //Methods for initializing the fragment for different progress_view_goal_item_row types.
     public void weightMode(){
-        int weightDefaultAmount = 2;
-        npAmount.setMinValue(1);
-        npAmount.setMaxValue(10);
-        npAmount.setValue(weightDefaultAmount);
-        selectedAmount = weightDefaultAmount;
-        selectedTimeframe = values[0];
+        int weightDefaultFrequency = 2;
+        npFrequency.setMinValue(1);
+        npFrequency.setMaxValue(10);
+        npFrequency.setValue(weightDefaultFrequency);
+        selectedFrequency = weightDefaultFrequency;
+        selectedMonitoringPeriod = values[0];
         Log.d(TAG, "weightMode: ");
     }
 
     public void bgMode(){
-        selectedTimeframe = values[0];
-        npTimeframe.setVisibility(View.GONE);
-        tvTimeframe.setVisibility(View.GONE);
-        tvMeasurementNumber.setText("Number of measurements a day");
-        tvMeasurementNumber.setPaddingRelative(0,300,0,0);
+        selectedMonitoringPeriod = values[0];
+        npMonitoringPeriod.setVisibility(View.GONE);
+        tvMonitoringPeriod.setVisibility(View.GONE);
+        tvFrequency.setText("Number of measurements a day");
+        tvFrequency.setPaddingRelative(0,300,0,0);
         Log.d(TAG, "bgMode: ");
     }
 
-    public void sleepMode(){
-        selectedTimeframe = values[0];
-        npTimeframe.setVisibility(View.GONE);
-        tvTimeframe.setVisibility(View.GONE);
-        tvMeasurementNumber.setText("Hours of sleep per night");
-        tvMeasurementNumber.setPaddingRelative(0,300,0,0);
-        Log.d(TAG, "sleepMode: ");
-    }
 
-    public void execriseMode(){
-        selectedTimeframe = values[1];
-        npTimeframe.setVisibility(View.GONE);
-        tvTimeframe.setVisibility(View.GONE);
-        tvMeasurementNumber.setText("Times of exercise a week");
-        tvMeasurementNumber.setPaddingRelative(0,300,0,0);
-        Log.d(TAG, "execriseMode: ");
+    public void exerciseMode(){
+        selectedMonitoringPeriod = values[1];
+        npMonitoringPeriod.setVisibility(View.GONE);
+        tvMonitoringPeriod.setVisibility(View.GONE);
+        tvFrequency.setText("Times of exercise a week");
+        tvFrequency.setPaddingRelative(0,300,0,0);
+        Log.d(TAG, "exerciseMode: ");
     }
 }

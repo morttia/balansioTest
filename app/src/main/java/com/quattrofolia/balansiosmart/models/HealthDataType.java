@@ -6,16 +6,23 @@ package com.quattrofolia.balansiosmart.models;
 
 public enum HealthDataType {
 
-    BLOOD_GLUCOSE(Unit.MMOL_PER_L),
-    WEIGHT(Unit.KG);
+    BLOOD_GLUCOSE("Blood Glucose", "BG", Unit.MMOL_PER_L),
+    WEIGHT("Weight", "W", Unit.KG);
 
+
+    private final String longName;
+    private final String shortName;
     private final Unit unit;
 
-    HealthDataType(final Unit unit) {
+    HealthDataType(String longName, String shortName, Unit unit) {
+        this.longName = longName;
+        this.shortName = shortName;
         this.unit = unit;
     }
 
-    public Unit unit() {
+    public String getLongName() { return longName; }
+    public String getShortName() { return shortName; }
+    public Unit getUnit() {
         return unit;
     }
 }

@@ -4,6 +4,8 @@ package com.quattrofolia.balansiosmart;
  * Created by mrbeva on 10/30/16.
  */
 
+//part of GoalTypeFragment
+
 public class GoalTypeListItem {
 
     private String header;

@@ -2,23 +2,32 @@ package com.quattrofolia.balansiosmart;
 
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.util.Log;
+
+import com.quattrofolia.balansiosmart.models.Goal;
+import com.quattrofolia.balansiosmart.models.User;
 
 import io.realm.Realm;
+import io.realm.RealmList;
 
-public class MainActivity extends FragmentActivity{
 
+
+public class GoalComposerActivity extends FragmentActivity{
+    private User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Realm.init(this); // Initialize Realm only once when the app starts.
         setContentView(R.layout.activity_main);
+        user = new User();
+        user.goals = new RealmList<>();
 
         // Check that the activity is using the layout version with
         // the fragment_container FrameLayout
         if (findViewById(R.id.fragment_container) != null) {
 
-            // However, if we're being restored from a previous state,
+            // If we're being restored from a previous state,
             // then we don't need to do anything and should return or else
             // we could end up with overlapping fragments.
             if (savedInstanceState != null) {
@@ -36,5 +45,11 @@ public class MainActivity extends FragmentActivity{
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.fragment_container, typeFragment).commit();
         }
+    }
+
+    public void addGoal(Goal g){
+        Log.d("jes", "addGoal: ");
+        user.goals.add(g);
+        Log.d("jes", "addGoal: Frequency: "+g.getDiscipline().getFrequency());
     }
 }

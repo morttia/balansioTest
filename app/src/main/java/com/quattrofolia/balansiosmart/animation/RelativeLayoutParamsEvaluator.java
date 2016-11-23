@@ -5,8 +5,8 @@ import android.widget.RelativeLayout.LayoutParams;
 
 import com.quattrofolia.balansiosmart.cardstack.CardUtils;
 
-//import com.wenchao.cardstack.CardUtils;
 
+//Part of ProgressView's CardView
 public class RelativeLayoutParamsEvaluator implements TypeEvaluator<LayoutParams> {
 
     @Override
