@@ -7,7 +7,9 @@ package com.quattrofolia.balansiosmart.models;
 
 public enum Unit {
     KG("kg"),
-    MMOL_PER_L("mmol/l");
+    MMOL_PER_L("mmol/l"),
+    MMHG("mmHg"),
+    MINUTE("min");
 
 
     private final String str;

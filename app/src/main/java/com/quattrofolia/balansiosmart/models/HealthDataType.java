@@ -7,7 +7,9 @@ package com.quattrofolia.balansiosmart.models;
 public enum HealthDataType {
 
     BLOOD_GLUCOSE(Unit.MMOL_PER_L),
-    WEIGHT(Unit.KG);
+    WEIGHT(Unit.KG),
+    BLOOD_PRESSURE_SYSTOLIC(Unit.MMHG),
+    BLOOD_PRESSURE_DIASTOLIC(Unit.MMHG);
 
 
     private final Unit unit;

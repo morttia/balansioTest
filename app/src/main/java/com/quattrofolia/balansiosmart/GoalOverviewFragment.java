@@ -18,6 +18,8 @@ import java.math.BigDecimal;
 
 
 import static android.content.ContentValues.TAG;
+import static com.quattrofolia.balansiosmart.models.HealthDataType.BLOOD_PRESSURE_DIASTOLIC;
+import static com.quattrofolia.balansiosmart.models.HealthDataType.BLOOD_PRESSURE_SYSTOLIC;
 import static com.quattrofolia.balansiosmart.models.HealthDataType.WEIGHT;
 import static com.quattrofolia.balansiosmart.models.MonitoringPeriod.day;
 import static com.quattrofolia.balansiosmart.models.MonitoringPeriod.month;
@@ -35,24 +37,23 @@ public class GoalOverviewFragment extends Fragment {
     private String goalType;
     private int frequency;
     private String monitoringPeriod;
-    private int idealRangeMin;
-    private int idealRangeMax;
+    private String idealRangeMin;
+    private String idealRangeMax;
     private String notficationStyle;
     private Goal goal;
     private Discipline discipline;
-    //List<HealthDataEntry> healthDataEntries = new ArrayList<HealthDataEntry>();
     private Range range;
 
     public static GoalOverviewFragment newInstance(
             String GoalType, int frequency, String monitoringPeriod,
-            int idealRangeMin, int idealRangeMax, String notificationStyle) {
+            String idealRangeMin, String idealRangeMax, String notificationStyle) {
         GoalOverviewFragment fragment = new GoalOverviewFragment();
         Bundle args = new Bundle();
         args.putString("goalType", GoalType);
         args.putInt("frequency", frequency);
         args.putString("monitoringPeriod", monitoringPeriod);
-        args.putInt("rangeMin", idealRangeMin);
-        args.putInt("rangeMax", idealRangeMax);
+        args.putString("rangeMin", idealRangeMin);
+        args.putString("rangeMax", idealRangeMax);
         args.putString("notificationStyle", notificationStyle);
         fragment.setArguments(args);
         return fragment;
@@ -67,15 +68,15 @@ public class GoalOverviewFragment extends Fragment {
             goalType = getArguments().getString("goalType");
             frequency = getArguments().getInt("frequency");
             monitoringPeriod = getArguments().getString("monitoringPeriod");
-            idealRangeMin = getArguments().getInt("rangeMin");
-            idealRangeMax = getArguments().getInt("rangeMax");
+            idealRangeMin = getArguments().getString("rangeMin");
+            idealRangeMax = getArguments().getString("rangeMax");
             notficationStyle = getArguments().getString("notificationStyle");
 
             goal = new Goal();
             if(frequency!=0) {
                 discipline = new Discipline();
             }
-            if (idealRangeMax!=0){
+            if (!idealRangeMax.equals("0")){
                 range = new Range();
             }
 
@@ -87,6 +88,14 @@ public class GoalOverviewFragment extends Fragment {
             Log.d(TAG, "onCreate: notification Style: "+notficationStyle);
         } else {
             Log.d(TAG, "onCreate: arguments null");
+        }
+        if (goalType.equals("Weight")) {
+            goal.setType(WEIGHT);
+            Log.d(TAG, "onCreate: Goal print" + goal.toString());
+        } else if (goalType.equals("Blood Pressure Systolic")) {
+            goal.setType(BLOOD_PRESSURE_SYSTOLIC);
+        } else if (goalType.equals("Blood Pressure Diastolic")) {
+            goal.setType(BLOOD_PRESSURE_DIASTOLIC);
         }
 
         if (discipline!=null) {
@@ -113,10 +122,6 @@ public class GoalOverviewFragment extends Fragment {
             range.setHigh(new BigDecimal(idealRangeMax));
             Log.d(TAG, "onCreate: range getHigh: " + range.getHigh());
 
-            if (goalType.equals("Weight")) {
-                goal.setType(WEIGHT);
-                Log.d(TAG, "onCreate: Goal print" + goal.toString());
-            }
             goal.setTargetRange(range);
         }
     }
@@ -131,7 +136,7 @@ public class GoalOverviewFragment extends Fragment {
 
         tvType.setText("Goal type: "+goalType);
         tvFrequency.setText(frequency+" Measurement(s) a "+monitoringPeriod);
-        if (idealRangeMin != 0 && idealRangeMax != 0){
+        if (!idealRangeMin.equals("0") && !idealRangeMax.equals("0")){
             tvRangeMin.setText("Goal range minimum value: "+idealRangeMin);
             tvRangeMax.setText("Goal range maximum value: "+idealRangeMax);
         }

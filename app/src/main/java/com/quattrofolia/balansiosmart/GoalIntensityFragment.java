@@ -133,7 +133,7 @@ public class GoalIntensityFragment extends Fragment {
                 if (goalType.equals("Exercise")) {
                     // Create fragment and pass the selected values as arguments to the next fragment
                     Log.d(TAG, "onClick: about to create a fragment, goalType: " + goalType + " selected amount: " + selectedFrequency + " selected timeframe: " + selectedMonitoringPeriod);
-                    GoalNotificationFragment newFragment = GoalNotificationFragment.newInstance(goalType, selectedFrequency, selectedMonitoringPeriod, 0, 0);
+                    GoalNotificationFragment newFragment = GoalNotificationFragment.newInstance(goalType, selectedFrequency, selectedMonitoringPeriod, "0", "0");
                     FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
                     transaction.setCustomAnimations(R.anim.enter, R.anim.exit);
 
