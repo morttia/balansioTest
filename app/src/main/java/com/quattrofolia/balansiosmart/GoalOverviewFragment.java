@@ -1,15 +1,12 @@
 package com.quattrofolia.balansiosmart;
 
-import android.animation.ObjectAnimator;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.DecelerateInterpolator;
 import android.widget.Button;
-import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -21,6 +18,8 @@ import java.math.BigDecimal;
 
 
 import static android.content.ContentValues.TAG;
+import static com.quattrofolia.balansiosmart.models.HealthDataType.BLOOD_PRESSURE_DIASTOLIC;
+import static com.quattrofolia.balansiosmart.models.HealthDataType.BLOOD_PRESSURE_SYSTOLIC;
 import static com.quattrofolia.balansiosmart.models.HealthDataType.WEIGHT;
 import static com.quattrofolia.balansiosmart.models.MonitoringPeriod.day;
 import static com.quattrofolia.balansiosmart.models.MonitoringPeriod.month;
@@ -38,24 +37,23 @@ public class GoalOverviewFragment extends Fragment {
     private String goalType;
     private int frequency;
     private String monitoringPeriod;
-    private int idealRangeMin;
-    private int idealRangeMax;
+    private String idealRangeMin;
+    private String idealRangeMax;
     private String notficationStyle;
     private Goal goal;
     private Discipline discipline;
-    //List<HealthDataEntry> healthDataEntries = new ArrayList<HealthDataEntry>();
     private Range range;
 
     public static GoalOverviewFragment newInstance(
             String GoalType, int frequency, String monitoringPeriod,
-            int idealRangeMin, int idealRangeMax, String notificationStyle) {
+            String idealRangeMin, String idealRangeMax, String notificationStyle) {
         GoalOverviewFragment fragment = new GoalOverviewFragment();
         Bundle args = new Bundle();
         args.putString("goalType", GoalType);
         args.putInt("frequency", frequency);
         args.putString("monitoringPeriod", monitoringPeriod);
-        args.putInt("rangeMin", idealRangeMin);
-        args.putInt("rangeMax", idealRangeMax);
+        args.putString("rangeMin", idealRangeMin);
+        args.putString("rangeMax", idealRangeMax);
         args.putString("notificationStyle", notificationStyle);
         fragment.setArguments(args);
         return fragment;
@@ -70,13 +68,17 @@ public class GoalOverviewFragment extends Fragment {
             goalType = getArguments().getString("goalType");
             frequency = getArguments().getInt("frequency");
             monitoringPeriod = getArguments().getString("monitoringPeriod");
-            idealRangeMin = getArguments().getInt("rangeMin");
-            idealRangeMax = getArguments().getInt("rangeMax");
+            idealRangeMin = getArguments().getString("rangeMin");
+            idealRangeMax = getArguments().getString("rangeMax");
             notficationStyle = getArguments().getString("notificationStyle");
 
-            discipline = new Discipline();
-            range = new Range();
             goal = new Goal();
+            if(frequency!=0) {
+                discipline = new Discipline();
+            }
+            if (!idealRangeMax.equals("0")){
+                range = new Range();
+            }
 
             Log.d(TAG, "onCreate: goaltype: "+goalType);
             Log.d(TAG, "onCreate: measurement frequency: "+frequency);
@@ -87,33 +89,41 @@ public class GoalOverviewFragment extends Fragment {
         } else {
             Log.d(TAG, "onCreate: arguments null");
         }
-
-        discipline.setFrequency(frequency);
-        if (monitoringPeriod.equals("day")){
-            discipline.setMonitoringPeriod(day);
-            Log.d(TAG, "onCreate: discipline getMonitoringPeriod: "+discipline.getMonitoringPeriod().toString());
-
-        } else if (monitoringPeriod.equals("week")) {
-            discipline.setMonitoringPeriod(week);
-            Log.d(TAG, "onCreate: discipline getMonitoringPeriod: "+discipline.getMonitoringPeriod().toString());
-
-        } else {
-            discipline.setMonitoringPeriod(month);
-            Log.d(TAG, "onCreate: discipline getMonitoringPeriod: "+discipline.getMonitoringPeriod().toString());
-
-        }
-        range.setLow(new BigDecimal(idealRangeMin));
-        Log.d(TAG, "onCreate:range getLow:  "+range.getLow());
-
-        range.setHigh(new BigDecimal(idealRangeMax));
-        Log.d(TAG, "onCreate: range getHigh: "+range.getHigh());
-
-        if (goalType.equals("Weight")){
+        if (goalType.equals("Weight")) {
             goal.setType(WEIGHT);
-            Log.d(TAG, "onCreate: Goal print"+goal.toString());
+            Log.d(TAG, "onCreate: Goal print" + goal.toString());
+        } else if (goalType.equals("Blood Pressure Systolic")) {
+            goal.setType(BLOOD_PRESSURE_SYSTOLIC);
+        } else if (goalType.equals("Blood Pressure Diastolic")) {
+            goal.setType(BLOOD_PRESSURE_DIASTOLIC);
         }
-        goal.setDiscipline(discipline);
-        goal.setTargetRange(range);
+
+        if (discipline!=null) {
+            discipline.setFrequency(frequency);
+            if (monitoringPeriod.equals("day")) {
+                discipline.setMonitoringPeriod(day);
+                Log.d(TAG, "onCreate: discipline getMonitoringPeriod: " + discipline.getMonitoringPeriod().toString());
+
+            } else if (monitoringPeriod.equals("week")) {
+                discipline.setMonitoringPeriod(week);
+                Log.d(TAG, "onCreate: discipline getMonitoringPeriod: " + discipline.getMonitoringPeriod().toString());
+
+            } else {
+                discipline.setMonitoringPeriod(month);
+                Log.d(TAG, "onCreate: discipline getMonitoringPeriod: " + discipline.getMonitoringPeriod().toString());
+            }
+            goal.setDiscipline(discipline);
+        }
+
+        if (range!=null) {
+            range.setLow(new BigDecimal(idealRangeMin));
+            Log.d(TAG, "onCreate:range getLow:  " + range.getLow());
+
+            range.setHigh(new BigDecimal(idealRangeMax));
+            Log.d(TAG, "onCreate: range getHigh: " + range.getHigh());
+
+            goal.setTargetRange(range);
+        }
     }
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -126,7 +136,7 @@ public class GoalOverviewFragment extends Fragment {
 
         tvType.setText("Goal type: "+goalType);
         tvFrequency.setText(frequency+" Measurement(s) a "+monitoringPeriod);
-        if (idealRangeMin != 0 && idealRangeMax != 0){
+        if (!idealRangeMin.equals("0") && !idealRangeMax.equals("0")){
             tvRangeMin.setText("Goal range minimum value: "+idealRangeMin);
             tvRangeMax.setText("Goal range maximum value: "+idealRangeMax);
         }
