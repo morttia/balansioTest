@@ -18,7 +18,7 @@ import static android.content.ContentValues.TAG;
  * Created by eemeliheinonen on 27/10/2016.
  */
 
-// Fragment class for selcting goal's intensity
+// Fragment class for selecting goal's intensity
 public class GoalIntensityFragment extends Fragment {
     private int frequencyMin;
     private int frequencyMax;
@@ -114,8 +114,11 @@ public class GoalIntensityFragment extends Fragment {
             exerciseMode();
         }
 
+        //handle the swiping to the next fragment by clicking on the button
         btnSkip.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+
+                //Move to the next fragment without passing new data from this fragment
                 GoalRangeFragment newFragment = GoalRangeFragment.newInstance(goalType, 0, "none");
                 FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
                 transaction.setCustomAnimations(R.anim.enter, R.anim.exit);
@@ -128,7 +131,6 @@ public class GoalIntensityFragment extends Fragment {
         btnNext.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
-        //handle the swiping to the next fragment by clicking on the button
                 //Move to the next fragment
                 if (goalType.equals("Exercise")) {
                     // Create fragment and pass the selected values as arguments to the next fragment

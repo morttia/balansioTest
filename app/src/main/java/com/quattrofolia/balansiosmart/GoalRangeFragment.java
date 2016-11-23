@@ -92,7 +92,6 @@ public class GoalRangeFragment extends Fragment {
         npMax = (NumberPicker) myView.findViewById(R.id.numberPicker_max);
         btnNext = (Button) myView.findViewById(R.id.btnRangeNext);
         btnSkip = (Button) myView.findViewById(R.id.btnRangeSkip);
-        //tv.setText("Select the ideal range minimum value");
 
         // Initialize the pickers
         npMin.setMaxValue(minRangeMax);
@@ -118,7 +117,7 @@ public class GoalRangeFragment extends Fragment {
         npMin.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
             @Override
             public void onValueChange(NumberPicker picker, int oldVal, int newVal){
-                //Display the newly selected number from picker
+                //Check data type and display the newly selected number from picker
                 if (goalType.equals("Sleep")){
                     Log.d(TAG, "onValueChange: min: "+newVal);
                     minSelectedValue = Integer.toString(newVal);
@@ -136,6 +135,7 @@ public class GoalRangeFragment extends Fragment {
         npMax.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
             @Override
             public void onValueChange(NumberPicker picker, int oldVal, int newVal){
+                //Check data type and display the newly selected number from picker
                 if (goalType.equals("Blood Glucose")){
                     Log.d(TAG, "onValueChange: String "+bgMaxValues[newVal]);
                     maxSelectedValue = bgMaxValues[newVal];
@@ -146,9 +146,10 @@ public class GoalRangeFragment extends Fragment {
             }
         });
 
+        //handle the swiping to the next fragment by clicking on the button
         btnSkip.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                //Move to the next fragment
+                //Move to the next fragment without passing new data from this fragment
 
                 GoalNotificationFragment newFragment = GoalNotificationFragment.newInstance(goalType, frequency, monitoringPeriod, "0", "0");
                 FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
@@ -159,7 +160,6 @@ public class GoalRangeFragment extends Fragment {
             }
         });
 
-        //handle the swiping to the next fragment by clicking on the button
         btnNext.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 //Move to the next fragment
@@ -235,8 +235,9 @@ public class GoalRangeFragment extends Fragment {
         Log.d(TAG, "bgMode: called");
         double minNum = 3;
         double maxNum = 6;
-        for (int i = 0; i< bgMinValues.length; i++) {
 
+        //Loop for populating the pickers with numbers that have decimals
+        for (int i = 0; i< bgMinValues.length; i++) {
             minNum += 0.5;
             maxNum += 0.5;
             String number = format("%.1f", minNum);
