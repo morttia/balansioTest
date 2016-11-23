@@ -6,7 +6,9 @@ package com.quattrofolia.balansiosmart.models;
 
 public enum HealthDataType {
 
-    BLOOD_GLUCOSE(Unit.MMOL_PER_L),
+    BLOOD_GLUCOSE("Blood Glucose", "BG", Unit.MMOL_PER_L),
+    WEIGHT("Weight", "W", Unit.KG);
+    /*BLOOD_GLUCOSE(Unit.MMOL_PER_L),
     WEIGHT(Unit.KG),
     SLEEP(Unit.HOUR),
     HYPOS(Unit.INSTANCE),
@@ -14,16 +16,22 @@ public enum HealthDataType {
     MEDICATION_BASAL(Unit.INSTANCE),
     A1C(Unit.PERCENTAGE),
     EXERCISE(Unit.HOUR),
-    BLOOD_PRESSURE_SYSTOLIC(Unit.MMHG);
+    BLOOD_PRESSURE_SYSTOLIC(Unit.MMHG);*/
 
 
+    private final String longName;
+    private final String shortName;
     private final Unit unit;
 
-    HealthDataType(final Unit unit) {
+    HealthDataType(String longName, String shortName, Unit unit) {
+        this.longName = longName;
+        this.shortName = shortName;
         this.unit = unit;
     }
 
-    public Unit unit() {
+    public String getLongName() { return longName; }
+    public String getShortName() { return shortName; }
+    public Unit getUnit() {
         return unit;
     }
 }
