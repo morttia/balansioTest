@@ -6,8 +6,7 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/testRed"
+        android:layout_height="wrap_content"
         android:clipChildren="false"
         android:orientation="vertical"
         tools:context=".ProgressViewActivity">
@@ -17,7 +16,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/container"
-            android:background="@color/testYellow"
             android:orientation="vertical">
 
             <Button
@@ -32,8 +30,7 @@
                 android:id="@+id/goalRecyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/create_goal_button"
-                android:background="@color/testBlue" />
+                android:layout_below="@id/create_goal_button" />
         </RelativeLayout>
 
 
@@ -43,7 +40,6 @@
             android:layout_height="150dp"
             android:layout_alignParentTop="true"
             android:layout_marginTop="20dp"
-            android:background="@color/testGreen"
             android:clipChildren="false"
             android:clipToPadding="false"
             android:padding="5dp"
