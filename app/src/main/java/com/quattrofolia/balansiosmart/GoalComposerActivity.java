@@ -4,16 +4,31 @@ import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.quattrofolia.balansiosmart.models.Discipline;
 import com.quattrofolia.balansiosmart.models.Goal;
+import com.quattrofolia.balansiosmart.models.Range;
 import com.quattrofolia.balansiosmart.models.User;
 
 import io.realm.Realm;
 import io.realm.RealmList;
 
+import com.quattrofolia.balansiosmart.models.Discipline;
+import com.quattrofolia.balansiosmart.models.Goal;
+import com.quattrofolia.balansiosmart.models.Range;
+
+import java.math.BigDecimal;
+
+
+import static android.content.ContentValues.TAG;
+import static com.quattrofolia.balansiosmart.models.MonitoringPeriod.*;
+import static com.quattrofolia.balansiosmart.models.HealthDataType.*;
 
 
 public class GoalComposerActivity extends FragmentActivity{
     private User user;
+    private Goal goal;
+    private Discipline discipline;
+    private Range range;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +68,28 @@ public class GoalComposerActivity extends FragmentActivity{
         Log.d("jes", "addGoal: Frequency: "+g.getDiscipline().getFrequency());
     }
 
+
+    //notes for creating default goals
+    //user object created in GoalComposerActivity
+
+
     public void addDefaultGoals(){
+        ////////blood glucose default goal////////
+        discipline = new Discipline();
+        range = new Range();
+        goal = new Goal();
+        goal.setType(BLOOD_GLUCOSE);
+        discipline.setFrequency(R.integer.bg_measurements_min_per_day);
+        discipline.setMonitoringPeriod(day);
+        range.setLow(new BigDecimal(R.string.bg_target_range_low));
+        range.setHigh(new BigDecimal(R.string.bg_target_range_high));
+        goal.setDiscipline(discipline);
+        goal.setTargetRange(range);
+        /////////////
+
+        //TODO set notification style
+
+        //TODO create rest of default goals
 
     }
 }

@@ -43,7 +43,6 @@ public class GoalOverviewFragment extends Fragment {
     private String notficationStyle;
     private Goal goal;
     private Discipline discipline;
-    //List<HealthDataEntry> healthDataEntries = new ArrayList<HealthDataEntry>();
     private Range range;
 
     public static GoalOverviewFragment newInstance(
