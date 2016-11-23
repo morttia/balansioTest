@@ -14,6 +14,7 @@ public class HealthDataEntry extends RealmObject implements AutoIncrementable {
     private int id;
     private String type;
 
+    public HealthDataEntry() {}
     public HealthDataEntry(String type, String value, long instant) {
         this.type = type;
         this.value = value;
