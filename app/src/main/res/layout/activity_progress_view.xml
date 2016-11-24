@@ -9,7 +9,7 @@
         android:layout_height="wrap_content"
         android:clipChildren="false"
         android:orientation="vertical"
-        tools:context=".ProgressViewActivity">
+        tools:context=".MainActivity">
 
         <RelativeLayout
             android:id="@+id/goal_view_container"

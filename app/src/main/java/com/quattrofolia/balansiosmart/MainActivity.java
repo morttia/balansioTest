@@ -1,8 +1,12 @@
 package com.quattrofolia.balansiosmart;
 
 import android.app.Activity;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.NotificationCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -15,7 +19,7 @@ import com.quattrofolia.balansiosmart.models.Goal;
 import java.util.ArrayList;
 
 
-public class ProgressViewActivity extends Activity {
+public class MainActivity extends Activity {
     private CardStack mCardStack;
     private CardsDataAdapter mCardAdapter;
     private Button createGoalButton;
@@ -49,8 +53,9 @@ public class ProgressViewActivity extends Activity {
         {
             public void onClick(View v)
             {
-                Intent i = new Intent(ProgressViewActivity.this, GoalComposerActivity.class);
+                Intent i = new Intent(MainActivity.this, GoalComposerActivity.class);
                 startActivity(i);
+                addNotification();
             }
         });
 
@@ -71,6 +76,34 @@ public class ProgressViewActivity extends Activity {
             Log.i("MyActivity", "Card Stack size: " + mCardStack.getAdapter().getCount());
         }
         mCardStack.bringToFront();
+    }
+
+
+    private void addNotification() {
+        //click notification -intent, opens MainActivity
+        Intent notificationIntent = new Intent(this, MainActivity.class);
+        PendingIntent contentIntent = PendingIntent.getActivity(this, 0, notificationIntent,
+                PendingIntent.FLAG_UPDATE_CURRENT);
+
+        //TODO create intents for buttons
+
+
+        NotificationCompat.Builder builder =
+                new NotificationCompat.Builder(this)
+                        .setSmallIcon(R.drawable.bg)
+                        .setContentTitle("Notifications Example")
+                        .setContentText("This is a test notification")
+                        .addAction(R.drawable.bg,"jee",contentIntent)
+                        .addAction(R.drawable.bg,"joo",contentIntent)
+                        ;
+
+        builder.setContentIntent(contentIntent);
+
+
+
+        // Add as notification
+        NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        manager.notify(0, builder.build());
     }
 
 }
