@@ -18,8 +18,12 @@ import java.math.BigDecimal;
 
 
 import static android.content.ContentValues.TAG;
+import static com.quattrofolia.balansiosmart.models.HealthDataType.BLOOD_GLUCOSE;
 import static com.quattrofolia.balansiosmart.models.HealthDataType.BLOOD_PRESSURE_DIASTOLIC;
 import static com.quattrofolia.balansiosmart.models.HealthDataType.BLOOD_PRESSURE_SYSTOLIC;
+import static com.quattrofolia.balansiosmart.models.HealthDataType.EXERCISE;
+import static com.quattrofolia.balansiosmart.models.HealthDataType.NUTRITION;
+import static com.quattrofolia.balansiosmart.models.HealthDataType.SLEEP;
 import static com.quattrofolia.balansiosmart.models.HealthDataType.WEIGHT;
 import static com.quattrofolia.balansiosmart.models.MonitoringPeriod.day;
 import static com.quattrofolia.balansiosmart.models.MonitoringPeriod.month;
@@ -39,7 +43,7 @@ public class GoalOverviewFragment extends Fragment {
     private String monitoringPeriod;
     private String idealRangeMin;
     private String idealRangeMax;
-    private String notficationStyle;
+    private String notificationStyle;
     private Goal goal;
     private Discipline discipline;
     private Range range;
@@ -70,7 +74,7 @@ public class GoalOverviewFragment extends Fragment {
             monitoringPeriod = getArguments().getString("monitoringPeriod");
             idealRangeMin = getArguments().getString("rangeMin");
             idealRangeMax = getArguments().getString("rangeMax");
-            notficationStyle = getArguments().getString("notificationStyle");
+            notificationStyle = getArguments().getString("notificationStyle");
 
             goal = new Goal();
             if(frequency!=0) {
@@ -85,7 +89,7 @@ public class GoalOverviewFragment extends Fragment {
             Log.d(TAG, "onCreate: monitoringPeriod: "+monitoringPeriod);
             Log.d(TAG, "onCreate: ideal range minimum value: "+idealRangeMin);
             Log.d(TAG, "onCreate: ideal range maximum value: "+idealRangeMax);
-            Log.d(TAG, "onCreate: notification Style: "+notficationStyle);
+            Log.d(TAG, "onCreate: notification Style: "+notificationStyle);
         } else {
             Log.d(TAG, "onCreate: arguments null");
         }
@@ -96,6 +100,14 @@ public class GoalOverviewFragment extends Fragment {
             goal.setType(BLOOD_PRESSURE_SYSTOLIC);
         } else if (goalType.equals("Blood Pressure Diastolic")) {
             goal.setType(BLOOD_PRESSURE_DIASTOLIC);
+        } else if (goalType.equals("Blood Glucose")) {
+            goal.setType(BLOOD_GLUCOSE);
+        } else if (goalType.equals("Exercise")) {
+            goal.setType(EXERCISE);
+        } else if (goalType.equals("Sleep")) {
+            goal.setType(SLEEP);
+        } else if (goalType.equals("Nutrition")) {
+            goal.setType(NUTRITION);
         }
 
         if (discipline!=null) {

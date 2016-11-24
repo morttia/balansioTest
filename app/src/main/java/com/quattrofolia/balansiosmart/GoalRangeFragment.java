@@ -41,8 +41,8 @@ public class GoalRangeFragment extends Fragment {
     private Button btnSkip;
     private TextView tvRangeMin;
     private TextView tvRangeMax;
-    private String[] bgMinValues = new String[8];
-    private String[] bgMaxValues = new String[8];
+    private String[] minValues = new String[8];
+    private String[] maxValues = new String[8];
 
 
 
@@ -122,8 +122,8 @@ public class GoalRangeFragment extends Fragment {
                     minSelectedValue = Integer.toString(newVal);
                     maxSelectedValue = Integer.toString(newVal);
                 } else if (goalType.equals("Blood Glucose")){
-                    Log.d(TAG, "onValueChange: "+bgMinValues[newVal]);
-                    minSelectedValue = bgMinValues[newVal];
+                    Log.d(TAG, "onValueChange: "+minValues[newVal]);
+                    minSelectedValue = minValues[newVal];
                 } else {
                     Log.d(TAG, "onValueChange: min: "+newVal);
                     minSelectedValue = Integer.toString(newVal);
@@ -136,8 +136,8 @@ public class GoalRangeFragment extends Fragment {
             public void onValueChange(NumberPicker picker, int oldVal, int newVal){
                 //Check data type and display the newly selected number from picker
                 if (goalType.equals("Blood Glucose")){
-                    Log.d(TAG, "onValueChange: String "+bgMaxValues[newVal]);
-                    maxSelectedValue = bgMaxValues[newVal];
+                    Log.d(TAG, "onValueChange: String "+maxValues[newVal]);
+                    maxSelectedValue = maxValues[newVal];
                 } else {
                     Log.d(TAG, "onValueChange: max: " + newVal);
                     maxSelectedValue = Integer.toString(newVal);
@@ -236,25 +236,25 @@ public class GoalRangeFragment extends Fragment {
         double maxNum = 6;
 
         //Loop for populating the pickers with numbers that have decimals
-        for (int i = 0; i< bgMinValues.length; i++) {
+        for (int i = 0; i< minValues.length; i++) {
             minNum += 0.5;
             maxNum += 0.5;
             String number = format("%.1f", minNum);
             String maxNumber = format("%.1f", maxNum);
             Log.d(TAG, "bgMode: number: "+number);
-            bgMinValues[i] = number;
-            bgMaxValues[i] = maxNumber;
-            Log.d(TAG, "bgMode: minVal i: "+bgMinValues[i]);
-            Log.d(TAG, "bgMode: maxVal i: "+bgMaxValues[i]);
+            minValues[i] = number;
+            maxValues[i] = maxNumber;
+            Log.d(TAG, "bgMode: minVal i: "+minValues[i]);
+            Log.d(TAG, "bgMode: maxVal i: "+maxValues[i]);
         }
 
-        npMin.setMaxValue(bgMinValues.length-1);
+        npMin.setMaxValue(minValues.length-1);
         npMin.setMinValue(0);
         npMin.setValue(0);
-        npMin.setDisplayedValues(bgMinValues);
-        npMax.setMaxValue(bgMaxValues.length-1);
+        npMin.setDisplayedValues(minValues);
+        npMax.setMaxValue(maxValues.length-1);
         npMax.setMinValue(0);
         npMax.setValue(0);
-        npMax.setDisplayedValues(bgMaxValues);
+        npMax.setDisplayedValues(maxValues);
     }
 }
